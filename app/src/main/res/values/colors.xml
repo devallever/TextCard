@@ -7,4 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="theme_color"></color>
+    <color name="page_bg">#000000</color>
+
+    <color name="googleRed">#EB4334</color>
+    <color name="googleGreen">#35AA53</color>
+    <color name="googleBleu">#4586F3</color>
+    <color name="googleYellow">#FBBD06</color>
+
+    <color name="color_CCCCCC">#CCCCCC</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_B0B5B9">#B0B5B9</color>
+    <color name="color_EEEEEE">#EEEEEE</color>
+    <color name="color_252525">#252525</color>
 </resources>
