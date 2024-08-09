@@ -85,6 +85,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                     ivBtnEditStyleArrow.animate().rotation(0f).start()
                 }
 
+                updateContentMarginBottom()
             }
 
             val selectTextColor = ContextCompat.getColor(this@EditActivity, R.color.white)
@@ -104,6 +105,8 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 tvSwitch.setTextColor(unSelectColor)
                 btnSwitch.background = null
                 switchContent.isVisible = false
+
+                updateContentMarginBottom()
             }
 
             btnBgColor.setOnClickListener {
@@ -121,6 +124,8 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 tvSwitch.setTextColor(unSelectColor)
                 btnSwitch.background = null
                 switchContent.isVisible = false
+
+                updateContentMarginBottom()
             }
 
             btnSwitch.setOnClickListener {
@@ -138,7 +143,24 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 tvSwitch.setTextColor(selectTextColor)
                 btnSwitch.background = ContextCompat.getDrawable(this@EditActivity, R.drawable.shape_edit_page_btn_bg)
                 switchContent.isVisible = true
+
+                updateContentMarginBottom()
             }
+        }
+    }
+
+    private fun updateContentMarginBottom() {
+        mBinding.apply {
+            menuContainer.post {
+                val marginBottom = if (menuContainer.isVisible) {
+                    menuContainer.height + DisplayHelper.dip2px(10)
+                } else {
+                    0
+                }
+
+                ViewHelper.setMarginBottom(contentContainer, marginBottom)
+            }
+
         }
     }
 }

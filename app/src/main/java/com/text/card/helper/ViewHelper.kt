@@ -13,4 +13,12 @@ object ViewHelper {
         }
     }
 
+    fun setMarginBottom(view: View, marginBotom: Int) {
+        view.post {
+            val lp = view.layoutParams as ViewGroup.MarginLayoutParams
+            lp.bottomMargin = marginBotom
+            view.layoutParams = lp
+        }
+    }
+
 }
