@@ -2,4 +2,7 @@
     <string name="app_name">TextCard</string>
     <string name="export">Export</string>
     <string name="done">Done</string>
+    <string name="tab_template">Template</string>
+    <string name="tab_switch">Switch</string>
+    <string name="tab_bg_color">BGColor</string>
 </resources>
