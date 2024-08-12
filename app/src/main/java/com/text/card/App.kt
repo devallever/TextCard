@@ -3,6 +3,7 @@ package com.text.card
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import com.text.card.core.TemplateManager
 
 class App: Application() {
     companion object {
@@ -13,5 +14,6 @@ class App: Application() {
     override fun onCreate() {
         context = this
         super.onCreate()
+        TemplateManager.initData()
     }
 }

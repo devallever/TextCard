@@ -5,9 +5,15 @@ import android.graphics.Color
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.boat.vpn.demo.util.StatusBarUtil
 import com.text.card.R
 import com.text.card.base.AppActivity
+import com.text.card.core.SwitchItem
+import com.text.card.core.TemplateManager
+import com.text.card.core.TemplateModel
 import com.text.card.databinding.ActivityEditBinding
 import com.text.card.databinding.TemplateMediaBinding
 import com.text.card.helper.DisplayHelper
@@ -15,11 +21,56 @@ import com.text.card.helper.KeyboardUtils
 import com.text.card.helper.KeyboardUtils.SoftKeyboardListener.OnSoftKeyboardChangeListener
 import com.text.card.helper.KeyboardVisibilityListener
 import com.text.card.helper.ViewHelper
+import com.text.card.ui.adapter.ColorAdapter
+import com.text.card.ui.adapter.Pager2Adapter
+import com.text.card.ui.adapter.SwitchItemAdapter
+import com.text.card.ui.adapter.TemplateItemAdapter
 import com.text.card.viewmodel.EditViewMode
 
 class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
 
-    private lateinit var keyboardListener: KeyboardVisibilityListener
+    private val templateAdapter by lazy {
+        TemplateItemAdapter().apply {
+            data.clear()
+            data.addAll(TemplateManager.templateData)
+            itemClick = object : TemplateItemAdapter.ItemClick {
+                override fun onItemClick(position: Int, item: TemplateModel<*>) {
+                    data.map {
+                        it.selected = false
+                        if (it.getTemplateName() == item.getTemplateName()) {
+                            it.selected = true
+                        }
+                    }
+                    notifyDataSetChanged()
+                    changeTemplate(item)
+                }
+            }
+        }
+    }
+
+    private val colorFragmentList = mutableListOf<ColorFragment>().apply {
+        add(ColorFragment())//Light
+        add(ColorFragment())//Dark
+    }
+
+    private val colorPagerAdapter by lazy {
+        Pager2Adapter(this, colorFragmentList)
+    }
+
+    private val switchAdapter by lazy {
+        SwitchItemAdapter().apply {
+            data.clear()
+            data.addAll(TemplateManager.switchData)
+            notifyDataSetChanged()
+
+            itemClick = object : SwitchItemAdapter.ItemClick {
+                override fun onItemClick(position: Int, item: SwitchItem) {
+                    item.show = !item.show
+                    notifyItemChanged(position, position)
+                }
+            }
+        }
+    }
 
     private lateinit var rootView: View
 
@@ -61,6 +112,30 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                     ivClearText.isVisible = false
                 }
             })
+
+            //Template
+            val templateLayoutManager = LinearLayoutManager(this@EditActivity, LinearLayoutManager.HORIZONTAL, false)
+            templateContent.layoutManager = templateLayoutManager
+            templateContent.adapter = templateAdapter
+
+            //BgColor
+            viewPager.adapter = colorPagerAdapter
+            viewPager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    if (position == 0) {
+                        indicateFirst.setBackgroundResource(R.drawable.shape_google_blue_r45)
+                        indicateSecond.setBackgroundResource(R.drawable.shape_999999_r45)
+                    } else {
+                        indicateFirst.setBackgroundResource(R.drawable.shape_999999_r45)
+                        indicateSecond.setBackgroundResource(R.drawable.shape_google_blue_r45)
+                    }
+                }
+            })
+
+            //Switch
+            switchContent.layoutManager = LinearLayoutManager(this@EditActivity, LinearLayoutManager.HORIZONTAL, false)
+            switchContent.adapter = switchAdapter
         }
 
         initClickListener()
@@ -110,6 +185,8 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             }
 
             btnBgColor.setOnClickListener {
+                updateBgColorData(TemplateManager.currentTemplate)
+
                 ivTemplate.isVisible = false
                 tvTemplate.setTextColor(unSelectColor)
                 btnTemplate.background = null
@@ -162,5 +239,14 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             }
 
         }
+    }
+
+    private fun changeTemplate(templateModel: TemplateModel<*>) {
+
+    }
+
+    private fun updateBgColorData(templateModel: TemplateModel<*>) {
+        colorFragmentList[0].updateData(templateModel.getTemplateBgColor()[0].colorDataList)
+        colorFragmentList[1].updateData(templateModel.getTemplateBgColor()[1].colorDataList)
     }
 }
