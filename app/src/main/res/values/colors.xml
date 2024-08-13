@@ -10,6 +10,7 @@
 
     <color name="theme_color">@color/googleBleu</color>
     <color name="page_bg">#000000</color>
+    <color name="card_drak_bg_color">@color/color_080510</color>
 
     <color name="googleRed">#EB4334</color>
     <color name="googleGreen">#35AA53</color>
@@ -21,4 +22,9 @@
     <color name="color_B0B5B9">#B0B5B9</color>
     <color name="color_EEEEEE">#EEEEEE</color>
     <color name="color_252525">#252525</color>
+    <color name="color_080510">#080510</color>
+    <color name="color_100f17">#100f17</color>
+    <color name="color_41404A">#41404A</color>
+    <color name="color_4C5159">#4C5159</color>
+    <color name="color_4D4E5D">#4D4D5E</color>
 </resources>

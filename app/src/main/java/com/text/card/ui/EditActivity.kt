@@ -1,27 +1,28 @@
 package com.text.card.ui
 
-import android.content.Context
-import android.graphics.Color
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.boat.vpn.demo.util.StatusBarUtil
 import com.text.card.R
 import com.text.card.base.AppActivity
+import com.text.card.core.ColorData
 import com.text.card.core.SwitchItem
 import com.text.card.core.TemplateManager
 import com.text.card.core.TemplateModel
+import com.text.card.core.TextCardCore
 import com.text.card.databinding.ActivityEditBinding
-import com.text.card.databinding.TemplateMediaBinding
 import com.text.card.helper.DisplayHelper
 import com.text.card.helper.KeyboardUtils
 import com.text.card.helper.KeyboardUtils.SoftKeyboardListener.OnSoftKeyboardChangeListener
-import com.text.card.helper.KeyboardVisibilityListener
 import com.text.card.helper.ViewHelper
-import com.text.card.ui.adapter.ColorAdapter
+import com.text.card.helper.log
+import com.text.card.helper.toast
 import com.text.card.ui.adapter.Pager2Adapter
 import com.text.card.ui.adapter.SwitchItemAdapter
 import com.text.card.ui.adapter.TemplateItemAdapter
@@ -41,16 +42,31 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                             it.selected = true
                         }
                     }
+                    TemplateManager.currentTemplate = item
                     notifyDataSetChanged()
                     changeTemplate(item)
+                    TextCardCore.saveCardData()
                 }
             }
         }
     }
 
+    private val mColorListener = object : ColorFragment.ColorListener {
+        override fun onColorSelect(pageIndex: Int, colorData: ColorData) {
+            TemplateManager.currentTemplate.updateCardBg(pageIndex == 1, colorData)
+            TextCardCore.cardData.setBgColorType(pageIndex)
+            TextCardCore.cardData.setBgColorName(colorData.name)
+            TextCardCore.saveCardData()
+        }
+    }
+
     private val colorFragmentList = mutableListOf<ColorFragment>().apply {
-        add(ColorFragment())//Light
-        add(ColorFragment())//Dark
+        add(ColorFragment(0).apply {
+            colorListener = mColorListener
+        })//Light
+        add(ColorFragment(1).apply {
+            colorListener = mColorListener
+        })//Dark
     }
 
     private val colorPagerAdapter by lazy {
@@ -67,9 +83,73 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 override fun onItemClick(position: Int, item: SwitchItem) {
                     item.show = !item.show
                     notifyItemChanged(position, position)
+                    handleSwitch(item, position)
                 }
             }
         }
+    }
+
+    private fun handleSwitch(item: SwitchItem, position: Int) {
+        when(position) {
+            0 -> {
+                //icon
+                TemplateManager.templateData.map {
+                    it.showOrHideIcon(item.show)
+                }
+                TextCardCore.cardData.switchIcon = item.show
+            }
+            1 -> {
+                //Date
+                TemplateManager.templateData.map {
+                    it.showOrHideDate(item.show)
+                }
+                TextCardCore.cardData.switchDate = item.show
+            }
+            2 -> {
+                //Title
+                TemplateManager.templateData.map {
+                    it.showOrHideTitle(item.show)
+                }
+                TextCardCore.cardData.switchTitle = item.show
+            }
+            3 -> {
+                //Text
+                TemplateManager.templateData.map {
+                    it.showOrHideContent(item.show)
+                }
+                TextCardCore.cardData.switchText = item.show
+            }
+            4 -> {
+                //Author
+                TemplateManager.templateData.map {
+                    it.showOrHideAuthor(item.show)
+                }
+                TextCardCore.cardData.switchQuote = item.show
+            }
+            5 -> {
+                //Count
+                TemplateManager.templateData.map {
+                    it.showOrHideWordCount(item.show)
+                }
+                TextCardCore.cardData.switchCount = item.show
+            }
+            6 -> {
+                //qrcode
+                TemplateManager.templateData.map {
+                    it.showOrHideQrCode(item.show)
+                }
+                TextCardCore.cardData.switchQrCode = item.show
+            }
+            7 -> {
+                //MARK
+                TemplateManager.templateData.map {
+                    it.showOrHideMark(item.show)
+                }
+                TextCardCore.cardData.switchWaterMark = item.show
+            }
+        }
+
+        TextCardCore.saveCardData()
     }
 
     private lateinit var rootView: View
@@ -80,13 +160,12 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
     override fun inflate() = ActivityEditBinding.inflate(layoutInflater)
 
     override fun init() {
+        TemplateManager.initTemplateView()
         rootView = this.findViewById(android.R.id.content)
 
         mBinding.apply {
             StatusBarUtil.fixStatusBar(toolBar)
-            val tempMediaBinding = TemplateMediaBinding.inflate(layoutInflater)
-            contentContainer.removeAllViews()
-            contentContainer.addView(tempMediaBinding.root)
+            changeTemplate(TemplateManager.currentTemplate)
 
             scrollView.post {
                 scrollView.post {
@@ -104,6 +183,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                     btnDone.isVisible = false
                     btnExport.isVisible = true
                     ivClearText.isVisible = true
+                    saveEdittextContent()
                 }
 
                 override fun show(height: Int) {
@@ -140,6 +220,11 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
 
         initClickListener()
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        TemplateManager.destroyTemplate()
     }
 
     private fun initClickListener() {
@@ -185,7 +270,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             }
 
             btnBgColor.setOnClickListener {
-                updateBgColorData(TemplateManager.currentTemplate)
+                changeBgColorData(TemplateManager.currentTemplate)
 
                 ivTemplate.isVisible = false
                 tvTemplate.setTextColor(unSelectColor)
@@ -242,10 +327,78 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
     }
 
     private fun changeTemplate(templateModel: TemplateModel<*>) {
-
+        mBinding.apply {
+            TextCardCore.cardData.templateName = templateModel.getTemplateName()
+            contentContainer.removeAllViews()
+            contentContainer.addView(templateModel.mBinding?.root)
+            initTemplateListener()
+            initTemplateData()
+        }
     }
 
-    private fun updateBgColorData(templateModel: TemplateModel<*>) {
+    private fun initTemplateListener() {
+        TemplateManager.currentTemplate.apply {
+            getIconView().setOnClickListener {
+                toast("icon")
+            }
+            getDateView().setOnClickListener {
+                toast("date")
+            }
+
+            getTitleView().addTextChangedListener {
+                TextCardCore.cardData.title = it?.toString()?:""
+            }
+            getContentView().addTextChangedListener {
+                TextCardCore.cardData.text = it?.toString()?:""
+                getWordCountView().text = "word: ${getContentView().text.toString().length}"
+            }
+            getAuthorView().addTextChangedListener {
+                TextCardCore.cardData.author = it?.toString()?:""
+            }
+        }
+
+        //when hide keyboard saveData
+    }
+
+    private fun initTemplateData() {
+        val cardData = TextCardCore.cardData
+        TemplateManager.currentTemplate.apply {
+            //icon
+            getIconView().setImageResource(cardData.iconResId)
+            //date always today
+
+            //title
+            getTitleView().setText(cardData.title)
+            //text
+            getContentView().setText(cardData.text)
+            //author
+            getAuthorView().setText(cardData.author)
+            //word
+            getWordCountView().setText("work: ${getContentView().text.toString().length}")
+        }
+
+        //showOrHide
+        TemplateManager.templateData.map {
+            it.showOrHideIcon(cardData.switchIcon)
+            it.showOrHideDate(cardData.switchDate)
+            it.showOrHideTitle(cardData.switchTitle)
+            it.showOrHideContent(cardData.switchText)
+            it.showOrHideAuthor(cardData.switchQuote)
+            it.showOrHideWordCount(cardData.switchCount)
+            it.showOrHideQrCode(cardData.switchQrCode)
+        }
+    }
+
+    private fun saveEdittextContent() {
+        TemplateManager.currentTemplate.apply {
+            TextCardCore.cardData.title = getTitleView().text.toString()
+            TextCardCore.cardData.text = getContentView().text.toString()
+            TextCardCore.cardData.author = getAuthorView().text.toString()
+            TextCardCore.saveCardData()
+        }
+    }
+
+    private fun changeBgColorData(templateModel: TemplateModel<*>) {
         colorFragmentList[0].updateData(templateModel.getTemplateBgColor()[0].colorDataList)
         colorFragmentList[1].updateData(templateModel.getTemplateBgColor()[1].colorDataList)
     }

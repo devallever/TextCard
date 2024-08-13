@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.text.card.core.ColorData
-import com.text.card.core.TemplateManager
 import com.text.card.databinding.FragmentColorBinding
 import com.text.card.ui.adapter.ColorAdapter
 
-class ColorFragment: Fragment() {
+class ColorFragment(val pageIndex: Int): Fragment() {
     private lateinit var mBinding: FragmentColorBinding
     private val colorDataList = mutableListOf<ColorData>()
+
+    var colorListener: ColorListener? = null
 
     private val colorAdapter by lazy {
         ColorAdapter().apply {
@@ -29,6 +30,8 @@ class ColorFragment: Fragment() {
                         }
                     }
                     notifyDataSetChanged()
+
+                    colorListener?.onColorSelect(pageIndex, item)
                 }
             }
         }
@@ -53,5 +56,9 @@ class ColorFragment: Fragment() {
 
     private fun updateSelectColor() {
 
+    }
+
+    interface ColorListener {
+        fun onColorSelect(pageIndex: Int, colorData: ColorData)
     }
 }

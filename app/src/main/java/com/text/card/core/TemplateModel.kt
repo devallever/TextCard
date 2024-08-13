@@ -1,18 +1,21 @@
 package com.text.card.core
 
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.viewbinding.ViewBinding
 
 abstract class TemplateModel<VB: ViewBinding> {
 
 
-    var mBinding: VB
+    var mBinding: VB? = null
     var name: String = ""
     var cover: Int = -1
     var selected: Boolean = false
     var bgColor: MutableList<TemplateBgColor>
 
     init {
-        mBinding = inflateView()
+        initView()
         name = getTemplateName()
         cover = getTemplateCover()
         bgColor = getTemplateBgColor()
@@ -33,18 +36,27 @@ abstract class TemplateModel<VB: ViewBinding> {
     abstract fun showOrHideAuthor(show: Boolean)
     abstract fun showOrHideWordCount(show: Boolean)
     abstract fun showOrHideQrCode(show: Boolean)
+    abstract fun showOrHideMark(show: Boolean)
 
-//    abstract fun getIconView(): ImageView
-//    abstract fun getDataView(): TextView
-//    abstract fun getTitleView(): EditText
-//    abstract fun getContentView(): EditText
-//    abstract fun getAuthorView(): TextView
-//    abstract fun getWordCountView(): TextView
+    abstract fun updateCardBg(isDark: Boolean, data: ColorData)
+
+    abstract fun getIconView(): ImageView
+    abstract fun getDateView(): TextView
+    abstract fun getTitleView(): EditText
+    abstract fun getContentView(): EditText
+    abstract fun getAuthorView(): EditText
+    abstract fun getWordCountView(): TextView
 //    abstract fun getQrCodeView(): ImageView
 //    abstract fun getQrCodeTitleView(): TextView
 //    abstract fun getQrCodeDescView(): TextView
 
 
+     fun initView() {
+        mBinding = inflateView()
+    }
 
+     fun destroyView() {
+        mBinding = null
+    }
 
 }

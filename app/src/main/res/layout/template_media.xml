@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/templateBg"
-    tools:background="#80fa8afa">
+    android:id="@+id/templateBg">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -45,12 +44,14 @@
 
             <!-- Title -->
             <EditText
+                android:maxLines="1"
                 android:id="@+id/etTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:background="@null"
                 android:hint="Title here"
+                android:textColorHint="@color/color_999999"
                 android:paddingVertical="3dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -73,6 +74,7 @@
                 android:layout_marginBottom="20dp">
 
                 <EditText
+                    android:maxLines="1"
                     android:id="@+id/etAuthor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -87,13 +89,14 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/tvWordCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="word: 0"
                     android:textColor="@color/color_B0B5B9"
-                    app:layout_constraintBottom_toBottomOf="@+id/etAuthor"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/etAuthor" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -105,6 +108,7 @@
                 android:background="@color/color_999999" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/qrCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -146,7 +150,15 @@
 
     </androidx.cardview.widget.CardView>
 
+    <View
+        android:id="@+id/bottomMargin"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        android:layout_height="20dp"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:visibility="visible"
+        android:id="@+id/waterMark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -165,7 +177,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvCount"
+            android:id="@+id/tvWater"
             style="@style/defaultTextStyle"
             android:layout_marginHorizontal="4dp"
             android:text="@string/app_name"

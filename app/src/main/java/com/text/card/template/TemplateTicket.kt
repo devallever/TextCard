@@ -1,6 +1,7 @@
 package com.text.card.template
 
 import android.view.LayoutInflater
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.text.card.App
 import com.text.card.R
@@ -8,8 +9,27 @@ import com.text.card.core.ColorData
 import com.text.card.core.TemplateBgColor
 import com.text.card.core.TemplateModel
 import com.text.card.databinding.TemplateMediaBinding
+import com.text.card.ui.widget.GradientBackgroundDrawable
 
 class TemplateTicket : TemplateModel<TemplateMediaBinding>() {
+    private val colorList = mutableListOf(
+        TemplateBgColor(
+            //light color
+            mutableListOf(
+                ColorData.BLUE_CYAN_GRADIENT,
+                ColorData.BLUE_PINK_GRADIENT
+            ),
+            TemplateBgColor.COLOR_LIGHT,
+        ),
+        //dark color
+        TemplateBgColor(
+            mutableListOf(
+                ColorData.DARK_BLUE_GRADIENT,
+                ColorData.DARK_INDIGO_GRADIENT
+            ),
+            TemplateBgColor.COLOR_DARK,
+        )
+    )
     override fun inflateView() = TemplateMediaBinding.inflate(LayoutInflater.from(App.context))
     override fun getTemplateName(): String {
         return "Ticket"
@@ -22,53 +42,103 @@ class TemplateTicket : TemplateModel<TemplateMediaBinding>() {
 
     override fun getTemplateBgColor(): MutableList<TemplateBgColor> {
         //dark & light
-        return mutableListOf(
-            TemplateBgColor(
-                //light color
-                mutableListOf(
-                    ColorData("Default", mutableListOf("#ff0000", "#ff00ff")),
-                    ColorData("Default2", mutableListOf("#00ff00", "#0000ff"))
-                ),
-                TemplateBgColor.COLOR_LIGHT,
-            ),
-            //dark color
-            TemplateBgColor(
-                mutableListOf(
-                    ColorData("Default", mutableListOf("#ff0000", "#ff00ff")),
-                    ColorData("Default2", mutableListOf("#00ff00", "#0000ff"))
-                ),
-                TemplateBgColor.COLOR_DARK,
-            )
-        )
+        return colorList
     }
 
     override fun showOrHideIcon(show: Boolean) {
-        mBinding.ivIcon.isVisible = show
+        mBinding?.ivIcon?.isVisible = show
     }
 
     override fun showOrHideDate(show: Boolean) {
-        mBinding.tvDate.isVisible = show
+        mBinding?.tvDate?.isVisible = show
     }
 
     override fun showOrHideTitle(show: Boolean) {
-        mBinding.etTitle.isVisible = show
+        mBinding?.etTitle?.isVisible = show
     }
 
     override fun showOrHideContent(show: Boolean) {
-        mBinding.etContent.isVisible = show
+        mBinding?.etContent?.isVisible = show
     }
 
     override fun showOrHideAuthor(show: Boolean) {
-        mBinding.etAuthor.isVisible = show
+        mBinding?.etAuthor?.isVisible = show
     }
 
     override fun showOrHideWordCount(show: Boolean) {
-        mBinding.tvCount.isVisible = show
+        mBinding?.tvWordCount?.isVisible = show
     }
 
     override fun showOrHideQrCode(show: Boolean) {
-        mBinding.tvQrCodeDesc.isVisible = show
+        mBinding?.qrCodeLine?.isVisible = show
+        mBinding?.qrCode?.isVisible = show
     }
 
+    override fun showOrHideMark(show: Boolean) {
+        mBinding?.waterMark?.isVisible = show
+    }
+
+    override fun updateCardBg(isDark: Boolean, data: ColorData) {
+
+        mBinding?.apply {
+
+            //background
+            templateBg.background = GradientBackgroundDrawable().apply {
+                setColorList(
+                    data.colorValue,
+                    templateBg.width.toFloat(),
+                    templateBg.height.toFloat()
+                )
+            }
+
+            //cardView
+            val cardBgColor = ContextCompat.getColor(
+                App.context,
+                if (isDark) R.color.card_drak_bg_color else R.color.white
+            )
+            cardView.setCardBackgroundColor(cardBgColor)
+
+            //icon
+            ivIcon.setBackgroundResource(if (isDark) R.drawable.shape100f17_r45 else R.drawable.shape_999999_r45)
+            ivIcon.setColorFilter(ContextCompat.getColor(App.context, if (isDark) R.color.white else R.color.black))
+
+            //Date
+            tvDate.setTextColor(App.getColor(if (isDark) R.color.color_41404A else R.color.color_B0B5B9))
+
+            //title
+            etTitle.setTextColor(App.getColor(if (isDark) R.color.white else R.color.black))
+            etTitle.setHintTextColor(App.getColor(if (isDark) R.color.color_41404A else R.color.color_999999))
+            //content
+            etContent.setTextColor(App.getColor(if (isDark) R.color.white else R.color.black))
+            etContent.setHintTextColor(App.getColor(if (isDark) R.color.color_41404A else R.color.color_999999))
+
+            //author
+            etAuthor.setTextColor(App.getColor(if (isDark) R.color.color_41404A else R.color.color_B0B5B9))
+            etAuthor.setHintTextColor(App.getColor(if (isDark) R.color.color_41404A else R.color.color_B0B5B9))
+            //word
+            tvWordCount.setTextColor(App.getColor(if (isDark) R.color.color_41404A else R.color.color_B0B5B9))
+
+            //qrcode
+            ivQrCode.setColorFilter(App.getColor(if (isDark) R.color.color_41404A else R.color.color_B0B5B9))
+            tvQrCodeTitle.setTextColor(App.getColor(if (isDark) R.color.color_4C5159 else R.color.color_999999))
+            tvQrCodeDesc.setTextColor(App.getColor(if (isDark) R.color.color_41404A else R.color.color_B0B5B9))
+
+            //water mark
+            tvWater.setTextColor(App.getColor(if (isDark) R.color.color_4D4E5D else R.color.color_999999))
+
+        }
+    }
+
+    override fun getIconView() = mBinding?.ivIcon!!
+
+    override fun getDateView() = mBinding?.tvDate!!
+
+    override fun getTitleView() = mBinding?.etTitle!!
+
+    override fun getContentView() = mBinding?.etContent!!
+
+    override fun getAuthorView() = mBinding?.etAuthor!!
+
+    override fun getWordCountView() = mBinding?.tvWordCount!!
 
 }
