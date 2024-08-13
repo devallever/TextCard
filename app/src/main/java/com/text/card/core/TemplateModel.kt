@@ -3,6 +3,7 @@ package com.text.card.core
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.viewbinding.ViewBinding
 
 abstract class TemplateModel<VB: ViewBinding> {
@@ -12,13 +13,24 @@ abstract class TemplateModel<VB: ViewBinding> {
     var name: String = ""
     var cover: Int = -1
     var selected: Boolean = false
-    var bgColor: MutableList<TemplateBgColor>
+    lateinit var bgColor: MutableList<TemplateBgColor>//0:light  1:dark
+
+    fun getBgColorData(): ColorData {
+        getTemplateBgColor().map {
+            it.colorDataList.map {
+                if (it.selected) {
+                    return it
+                }
+            }
+        }
+        return getTemplateBgColor()[0].colorDataList[0]
+    }
 
     init {
         initView()
         name = getTemplateName()
         cover = getTemplateCover()
-        bgColor = getTemplateBgColor()
+//        bgColor = getTemplateBgColor()
     }
 
     abstract fun inflateView(): VB

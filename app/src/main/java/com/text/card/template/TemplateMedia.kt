@@ -13,6 +13,7 @@ import com.text.card.core.ColorData
 import com.text.card.core.TemplateBgColor
 import com.text.card.core.TemplateModel
 import com.text.card.databinding.TemplateMediaBinding
+import com.text.card.helper.log
 import com.text.card.ui.widget.GradientBackgroundDrawable
 
 class TemplateMedia : TemplateModel<TemplateMediaBinding>() {
@@ -46,6 +47,7 @@ class TemplateMedia : TemplateModel<TemplateMediaBinding>() {
 
     override fun getTemplateBgColor(): MutableList<TemplateBgColor> {
         //dark & light
+        log("Media create getTemplateBgColor")
         return colorList
     }
 

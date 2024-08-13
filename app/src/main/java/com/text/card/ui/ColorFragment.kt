@@ -54,6 +54,10 @@ class ColorFragment(val pageIndex: Int): Fragment() {
         colorAdapter.notifyDataSetChanged()
     }
 
+    fun notifySelectedChanged() {
+        colorAdapter.notifyDataSetChanged()
+    }
+
     private fun updateSelectColor() {
 
     }

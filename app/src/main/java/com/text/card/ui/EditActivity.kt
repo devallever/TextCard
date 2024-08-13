@@ -1,7 +1,5 @@
 package com.text.card.ui
 
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -21,7 +19,6 @@ import com.text.card.helper.DisplayHelper
 import com.text.card.helper.KeyboardUtils
 import com.text.card.helper.KeyboardUtils.SoftKeyboardListener.OnSoftKeyboardChangeListener
 import com.text.card.helper.ViewHelper
-import com.text.card.helper.log
 import com.text.card.helper.toast
 import com.text.card.ui.adapter.Pager2Adapter
 import com.text.card.ui.adapter.SwitchItemAdapter
@@ -54,6 +51,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
     private val mColorListener = object : ColorFragment.ColorListener {
         override fun onColorSelect(pageIndex: Int, colorData: ColorData) {
             TemplateManager.currentTemplate.updateCardBg(pageIndex == 1, colorData)
+            updateMenuColorText(pageIndex == 1, colorData)
             TextCardCore.cardData.setBgColorType(pageIndex)
             TextCardCore.cardData.setBgColorName(colorData.name)
             TextCardCore.saveCardData()
@@ -206,9 +204,11 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                     if (position == 0) {
                         indicateFirst.setBackgroundResource(R.drawable.shape_google_blue_r45)
                         indicateSecond.setBackgroundResource(R.drawable.shape_999999_r45)
+                        tvColorStyle.text = "Light"
                     } else {
                         indicateFirst.setBackgroundResource(R.drawable.shape_999999_r45)
                         indicateSecond.setBackgroundResource(R.drawable.shape_google_blue_r45)
+                        tvColorStyle.text = "Dark"
                     }
                 }
             })
@@ -333,6 +333,9 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             contentContainer.addView(templateModel.mBinding?.root)
             initTemplateListener()
             initTemplateData()
+            contentContainer.post {
+                changeBgColorData(TemplateManager.currentTemplate)
+            }
         }
     }
 
@@ -375,6 +378,9 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             getAuthorView().setText(cardData.author)
             //word
             getWordCountView().setText("work: ${getContentView().text.toString().length}")
+
+            //bgColor
+
         }
 
         //showOrHide
@@ -398,8 +404,67 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
         }
     }
 
-    private fun changeBgColorData(templateModel: TemplateModel<*>) {
-        colorFragmentList[0].updateData(templateModel.getTemplateBgColor()[0].colorDataList)
-        colorFragmentList[1].updateData(templateModel.getTemplateBgColor()[1].colorDataList)
+    private fun changeBgColorSelectedData(templateModel: TemplateModel<*>) {
+
+    }
+
+    private fun changeBgColorData(templateModel: TemplateModel<*>, isChangeData: Boolean = true) {
+        val lightList = templateModel.getTemplateBgColor()[0].colorDataList
+        val darkList = templateModel.getTemplateBgColor()[1].colorDataList
+        val isDark = TextCardCore.cardData.getBgColorType() == 1
+        val colorName = TextCardCore.cardData.getBgColorName()
+
+        lightList.map {
+            it.selected = false
+        }
+        darkList.map {
+            it.selected = false
+        }
+
+        var setSuccess = false
+        if (isDark) {
+            darkList.map {
+                if (it.name == colorName) {
+                    it.selected = true
+                    setSuccess = true
+                }
+            }
+        } else {
+            lightList.map {
+                if (it.name == colorName) {
+                    it.selected = true
+                    setSuccess = true
+                }
+            }
+        }
+
+        if (!setSuccess) {
+            lightList[0].selected = true
+        }
+
+        if (isChangeData) {
+            colorFragmentList[0].updateData(lightList)
+            colorFragmentList[1].updateData(darkList)
+        } else {
+            colorFragmentList[0].notifySelectedChanged()
+            colorFragmentList[1].notifySelectedChanged()
+        }
+
+
+        val colorData = TemplateManager.currentTemplate.getBgColorData()
+        colorData.let {
+            TemplateManager.currentTemplate.updateCardBg(isDark,it )
+        }
+        updateMenuColorText(isDark, colorData)
+
+    }
+
+    private fun updateMenuColorText(isDark: Boolean, colorData: ColorData) {
+        mBinding.tvColorName.text = colorData.name
+        if (isDark) {
+            mBinding.tvColorStyle.text = "Dark"
+        } else {
+            mBinding.tvColorStyle.text = "Light"
+        }
     }
 }
