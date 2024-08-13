@@ -30,4 +30,9 @@
     <style name="superBigTextStyle" parent="defaultTextStyle">
         <item name="android:textSize">20sp</item>
     </style>
+
+    <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Theme.Design.BottomSheetDialog</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 </resources>

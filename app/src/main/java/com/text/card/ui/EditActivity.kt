@@ -27,6 +27,14 @@ import com.text.card.viewmodel.EditViewMode
 
 class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
 
+    private val mIconDialog by lazy {
+        IconDialog {
+            TemplateManager.currentTemplate.getIconView().setImageResource(it)
+            TextCardCore.cardData.iconResId = it
+            TextCardCore.saveCardData()
+        }
+    }
+
     private val templateAdapter by lazy {
         TemplateItemAdapter().apply {
             data.clear()
@@ -342,7 +350,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
     private fun initTemplateListener() {
         TemplateManager.currentTemplate.apply {
             getIconView().setOnClickListener {
-                toast("icon")
+                mIconDialog.show(supportFragmentManager)
             }
             getDateView().setOnClickListener {
                 toast("date")
