@@ -20,11 +20,11 @@ import com.text.card.helper.DisplayHelper
 import com.text.card.helper.KeyboardUtils
 import com.text.card.helper.KeyboardUtils.SoftKeyboardListener.OnSoftKeyboardChangeListener
 import com.text.card.helper.ViewHelper
-import com.text.card.helper.toast
 import com.text.card.ui.adapter.Pager2Adapter
 import com.text.card.ui.adapter.SwitchItemAdapter
 import com.text.card.ui.adapter.TemplateItemAdapter
 import com.text.card.ui.dialog.DateTimeFormatDialog
+import com.text.card.ui.dialog.IconDialog
 import com.text.card.ui.dialog.WordCountFormatDialog
 import com.text.card.viewmodel.EditViewMode
 
@@ -39,7 +39,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
     }
 
     private val mDateTimeFormatDialog by lazy {
-        DateTimeFormatDialog {text, format ->
+        DateTimeFormatDialog { text, format ->
             TemplateManager.currentTemplate.getDateView().text = text
             TextCardCore.cardData.dateFormatType = format
             TextCardCore.saveCardData()
@@ -49,7 +49,8 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
     private val mWordFormatDialog by lazy {
         WordCountFormatDialog {
             val etContent = TemplateManager.currentTemplate.getContentView()
-            TemplateManager.currentTemplate.getWordCountView().text = getString(it, etContent.text.toString().length)
+            TemplateManager.currentTemplate.getWordCountView().text =
+                getString(it, etContent.text.toString().length)
             TextCardCore.cardData.wordCountFormatType = it
             TextCardCore.saveCardData()
         }
@@ -116,7 +117,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
     }
 
     private fun handleSwitch(item: SwitchItem, position: Int) {
-        when(position) {
+        when (position) {
             0 -> {
                 //icon
                 TemplateManager.templateData.map {
@@ -124,6 +125,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 }
                 TextCardCore.cardData.switchIcon = item.show
             }
+
             1 -> {
                 //Date
                 TemplateManager.templateData.map {
@@ -131,6 +133,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 }
                 TextCardCore.cardData.switchDate = item.show
             }
+
             2 -> {
                 //Title
                 TemplateManager.templateData.map {
@@ -138,6 +141,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 }
                 TextCardCore.cardData.switchTitle = item.show
             }
+
             3 -> {
                 //Text
                 TemplateManager.templateData.map {
@@ -145,6 +149,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 }
                 TextCardCore.cardData.switchText = item.show
             }
+
             4 -> {
                 //Author
                 TemplateManager.templateData.map {
@@ -152,6 +157,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 }
                 TextCardCore.cardData.switchQuote = item.show
             }
+
             5 -> {
                 //Count
                 TemplateManager.templateData.map {
@@ -159,6 +165,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 }
                 TextCardCore.cardData.switchCount = item.show
             }
+
             6 -> {
                 //qrcode
                 TemplateManager.templateData.map {
@@ -166,6 +173,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 }
                 TextCardCore.cardData.switchQrCode = item.show
             }
+
             7 -> {
                 //MARK
                 TemplateManager.templateData.map {
@@ -204,23 +212,26 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 }
             }
 
-            KeyboardUtils.SoftKeyboardListener.setListener(this@EditActivity, object : OnSoftKeyboardChangeListener {
-                override fun hide(height: Int) {
-                    btnDone.isVisible = false
-                    btnExport.isVisible = true
-                    ivClearText.isVisible = true
-                    saveEdittextContent()
-                }
+            KeyboardUtils.SoftKeyboardListener.setListener(
+                this@EditActivity,
+                object : OnSoftKeyboardChangeListener {
+                    override fun hide(height: Int) {
+                        btnDone.isVisible = false
+                        btnExport.isVisible = true
+                        ivClearText.isVisible = true
+                        saveEdittextContent()
+                    }
 
-                override fun show(height: Int) {
-                    btnDone.isVisible = true
-                    btnExport.isVisible = false
-                    ivClearText.isVisible = false
-                }
-            })
+                    override fun show(height: Int) {
+                        btnDone.isVisible = true
+                        btnExport.isVisible = false
+                        ivClearText.isVisible = false
+                    }
+                })
 
             //Template
-            val templateLayoutManager = LinearLayoutManager(this@EditActivity, LinearLayoutManager.HORIZONTAL, false)
+            val templateLayoutManager =
+                LinearLayoutManager(this@EditActivity, LinearLayoutManager.HORIZONTAL, false)
             templateContent.layoutManager = templateLayoutManager
             templateContent.adapter = templateAdapter
 
@@ -242,7 +253,8 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             })
 
             //Switch
-            switchContent.layoutManager = LinearLayoutManager(this@EditActivity, LinearLayoutManager.HORIZONTAL, false)
+            switchContent.layoutManager =
+                LinearLayoutManager(this@EditActivity, LinearLayoutManager.HORIZONTAL, false)
             switchContent.adapter = switchAdapter
         }
 
@@ -264,11 +276,21 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             btnEditStyle.setOnClickListener {
                 menuContainer.isVisible = !menuContainer.isVisible
                 if (menuContainer.isVisible) {
-                    btnEditStyle.setCardBackgroundColor(ContextCompat.getColor(this@EditActivity, R.color.page_bg))
+                    btnEditStyle.setCardBackgroundColor(
+                        ContextCompat.getColor(
+                            this@EditActivity,
+                            R.color.page_bg
+                        )
+                    )
                     tvEditStyle.visibility = View.INVISIBLE
                     ivBtnEditStyleArrow.animate().rotation(-180f).start()
                 } else {
-                    btnEditStyle.setCardBackgroundColor(ContextCompat.getColor(this@EditActivity, R.color.color_252525))
+                    btnEditStyle.setCardBackgroundColor(
+                        ContextCompat.getColor(
+                            this@EditActivity,
+                            R.color.color_252525
+                        )
+                    )
                     tvEditStyle.visibility = View.VISIBLE
                     ivBtnEditStyleArrow.animate().rotation(0f).start()
                 }
@@ -281,7 +303,8 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             btnTemplate.setOnClickListener {
                 ivTemplate.isVisible = true
                 tvTemplate.setTextColor(selectTextColor)
-                btnTemplate.background = ContextCompat.getDrawable(this@EditActivity, R.drawable.shape_edit_page_btn_bg)
+                btnTemplate.background =
+                    ContextCompat.getDrawable(this@EditActivity, R.drawable.shape_edit_page_btn_bg)
                 templateContent.isVisible = true
 
                 ivBgColor.isVisible = false
@@ -307,7 +330,8 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
 
                 ivBgColor.isVisible = true
                 tvBgColor.setTextColor(selectTextColor)
-                btnBgColor.background = ContextCompat.getDrawable(this@EditActivity, R.drawable.shape_edit_page_btn_bg)
+                btnBgColor.background =
+                    ContextCompat.getDrawable(this@EditActivity, R.drawable.shape_edit_page_btn_bg)
                 bgColorContent.isVisible = true
 
                 ivSwitch.isVisible = false
@@ -331,7 +355,8 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
 
                 ivSwitch.isVisible = true
                 tvSwitch.setTextColor(selectTextColor)
-                btnSwitch.background = ContextCompat.getDrawable(this@EditActivity, R.drawable.shape_edit_page_btn_bg)
+                btnSwitch.background =
+                    ContextCompat.getDrawable(this@EditActivity, R.drawable.shape_edit_page_btn_bg)
                 switchContent.isVisible = true
 
                 updateContentMarginBottom()
@@ -380,14 +405,17 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             }
 
             getTitleView().addTextChangedListener {
-                TextCardCore.cardData.title = it?.toString()?:""
+                TextCardCore.cardData.title = it?.toString() ?: ""
             }
             getContentView().addTextChangedListener {
-                TextCardCore.cardData.text = it?.toString()?:""
-                getWordCountView().text = getString(TextCardCore.cardData.wordCountFormatType, getContentView().text.toString().length)
+                TextCardCore.cardData.text = it?.toString() ?: ""
+                getWordCountView().text = getString(
+                    TextCardCore.cardData.wordCountFormatType,
+                    getContentView().text.toString().length
+                )
             }
             getAuthorView().addTextChangedListener {
-                TextCardCore.cardData.author = it?.toString()?:""
+                TextCardCore.cardData.author = it?.toString() ?: ""
             }
         }
 
@@ -400,7 +428,8 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             //icon
             getIconView().setImageResource(cardData.iconResId)
             //date always today
-            getDateView().text = DateFormat.format(cardData.dateFormatType, System.currentTimeMillis())
+            getDateView().text =
+                DateFormat.format(cardData.dateFormatType, System.currentTimeMillis())
 
             //title
             getTitleView().setText(cardData.title)
@@ -409,7 +438,8 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             //author
             getAuthorView().setText(cardData.author)
             //word
-            getWordCountView().text = getString(cardData.wordCountFormatType, getContentView().text.toString().length)
+            getWordCountView().text =
+                getString(cardData.wordCountFormatType, getContentView().text.toString().length)
 
             //bgColor
 
@@ -485,7 +515,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
 
         val colorData = TemplateManager.currentTemplate.getBgColorData()
         colorData.let {
-            TemplateManager.currentTemplate.updateCardBg(isDark,it )
+            TemplateManager.currentTemplate.updateCardBg(isDark, it)
         }
         updateMenuColorText(isDark, colorData)
 

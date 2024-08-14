@@ -66,6 +66,7 @@ public class KeyboardVisibilityListener {
 
     public interface OnKeyboardVisibilityListener {
         void onKeyboardVisible();
+
         void onKeyboardHidden();
     }
 

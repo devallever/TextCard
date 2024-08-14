@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.text.card.core.IconData
 import com.text.card.databinding.RvIconBinding
 
-class IconAdapter(val data: MutableList<IconData>): RecyclerView.Adapter<IconAdapter.VH>()  {
+class IconAdapter(val data: MutableList<IconData>) : RecyclerView.Adapter<IconAdapter.VH>() {
 
     var listener: Listener? = null
 
-    class VH(val binding: RvIconBinding): RecyclerView.ViewHolder(binding.root)
+    class VH(val binding: RvIconBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val binding = RvIconBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -32,6 +32,7 @@ class IconAdapter(val data: MutableList<IconData>): RecyclerView.Adapter<IconAda
             }
         }
     }
+
     interface Listener {
         fun onItemClick(position: Int, item: IconData)
     }

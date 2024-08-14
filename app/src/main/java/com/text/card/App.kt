@@ -6,12 +6,12 @@ import android.content.Context
 import androidx.core.content.ContextCompat
 import com.text.card.core.TemplateManager
 
-class App: Application() {
+class App : Application() {
     companion object {
         @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
 
-        fun getColor(colorResId: Int) : Int {
+        fun getColor(colorResId: Int): Int {
             return ContextCompat.getColor(context, colorResId)
         }
     }

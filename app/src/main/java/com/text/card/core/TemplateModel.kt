@@ -3,10 +3,9 @@ package com.text.card.core
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.ColorRes
 import androidx.viewbinding.ViewBinding
 
-abstract class TemplateModel<VB: ViewBinding> {
+abstract class TemplateModel<VB : ViewBinding> {
 
 
     var mBinding: VB? = null
@@ -63,11 +62,11 @@ abstract class TemplateModel<VB: ViewBinding> {
 //    abstract fun getQrCodeDescView(): TextView
 
 
-     fun initView() {
+    fun initView() {
         mBinding = inflateView()
     }
 
-     fun destroyView() {
+    fun destroyView() {
         mBinding = null
     }
 

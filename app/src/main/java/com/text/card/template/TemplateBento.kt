@@ -1,7 +1,6 @@
 package com.text.card.template
 
 import android.view.LayoutInflater
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.text.card.App
@@ -32,6 +31,7 @@ class TemplateBento : TemplateModel<TemplateMediaBinding>() {
             TemplateBgColor.COLOR_DARK,
         )
     )
+
     override fun inflateView() = TemplateMediaBinding.inflate(LayoutInflater.from(App.context))
     override fun getTemplateName(): String {
         return "Bento"
@@ -104,7 +104,12 @@ class TemplateBento : TemplateModel<TemplateMediaBinding>() {
 
             //icon
             ivIcon.setBackgroundResource(if (isDark) R.drawable.shape100f17_r45 else R.drawable.shape_999999_r45)
-            ivIcon.setColorFilter(ContextCompat.getColor(App.context, if (isDark) R.color.white else R.color.black))
+            ivIcon.setColorFilter(
+                ContextCompat.getColor(
+                    App.context,
+                    if (isDark) R.color.white else R.color.black
+                )
+            )
 
             //Date
             tvDate.setTextColor(App.getColor(if (isDark) R.color.color_41404A else R.color.color_B0B5B9))

@@ -29,11 +29,11 @@ class CardData {
     }
 
     fun getBgColorName(): String {
-        return bgColorNameMap[TemplateManager.currentTemplate.getTemplateName()]?:""
+        return bgColorNameMap[TemplateManager.currentTemplate.getTemplateName()] ?: ""
     }
 
     fun getBgColorType(): Int {
-        return bgColorTypeMap[TemplateManager.currentTemplate.getTemplateName()]?:0
+        return bgColorTypeMap[TemplateManager.currentTemplate.getTemplateName()] ?: 0
     }
 
     //swich

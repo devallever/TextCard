@@ -18,8 +18,6 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
-import com.text.card.App;
-
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

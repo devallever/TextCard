@@ -40,12 +40,12 @@ public class ReboundNestedScrollView extends NestedScrollView {
     private float moveHeight;
 
     public ReboundNestedScrollView(Context context) {
-        this(context,null);
+        this(context, null);
 
     }
 
     public ReboundNestedScrollView(Context context, AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public ReboundNestedScrollView(Context context, AttributeSet attrs, int defStyle) {
@@ -83,7 +83,7 @@ public class ReboundNestedScrollView extends NestedScrollView {
                 previousY = currentY;
 
                 //判定是否在顶部或者滑到了底部
-                if((!childView.canScrollVertically(-1)&&(currentY-startY)>0)||(!childView.canScrollVertically(1)&&(currentY-startY)<0)){
+                if ((!childView.canScrollVertically(-1) && (currentY - startY) > 0) || (!childView.canScrollVertically(1) && (currentY - startY) < 0)) {
                     //计算阻尼
                     float distance = currentY - startY;
                     if (distance < 0) {

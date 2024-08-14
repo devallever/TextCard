@@ -1,4 +1,4 @@
-package com.text.card.ui
+package com.text.card.ui.dialog
 
 import android.app.Activity
 import android.os.Bundle

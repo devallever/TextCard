@@ -23,8 +23,10 @@ object GsonHelper {
 
     fun <T> fromJson(json: String, clazz: Class<T>): T? {
         try {
-            return  mGson.fromJson(json, clazz)
-        } catch (e: Exception) {e.printStackTrace()}
+            return mGson.fromJson(json, clazz)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         return null
     }
 

@@ -18,7 +18,7 @@ import com.text.card.databinding.DialogWordCountFormatBinding
 import com.text.card.helper.DisplayHelper
 import com.text.card.ui.adapter.WordFormatAdapter
 
-class WordCountFormatDialog(val block: (format: Int) -> Unit = {  }) :
+class WordCountFormatDialog(val block: (format: Int) -> Unit = { }) :
     BottomSheetDialogFragment() {
 
     protected lateinit var mBinding: DialogWordCountFormatBinding

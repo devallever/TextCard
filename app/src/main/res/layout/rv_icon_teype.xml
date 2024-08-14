@@ -13,7 +13,7 @@
         style="@style/defaultTextStyle"
         android:text="Abstract"
         android:textStyle="bold"
-        android:padding="10dp"/>
+        android:padding="10dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         tools:listitem="@layout/rv_icon"
@@ -22,6 +22,6 @@
         app:layout_constraintTop_toBottomOf="@+id/tvIconTypeName"
         android:id="@+id/rvIcon"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

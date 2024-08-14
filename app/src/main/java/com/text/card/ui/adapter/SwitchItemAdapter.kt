@@ -8,11 +8,12 @@ import com.text.card.R
 import com.text.card.core.SwitchItem
 import com.text.card.databinding.RvSwitchBinding
 
-class SwitchItemAdapter(val data: MutableList<SwitchItem> = mutableListOf()): RecyclerView.Adapter<SwitchItemAdapter.VH> () {
+class SwitchItemAdapter(val data: MutableList<SwitchItem> = mutableListOf()) :
+    RecyclerView.Adapter<SwitchItemAdapter.VH>() {
 
     var itemClick: ItemClick? = null
 
-    class VH(val binding: RvSwitchBinding): RecyclerView.ViewHolder(binding.root)
+    class VH(val binding: RvSwitchBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val binding = RvSwitchBinding.inflate(LayoutInflater.from(parent.context), parent, false)

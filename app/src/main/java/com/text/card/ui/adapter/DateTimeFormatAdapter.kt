@@ -8,15 +8,17 @@ import com.text.card.core.DateFormat
 import com.text.card.core.DateTimeItem
 import com.text.card.databinding.RvDateTimeFormatBinding
 
-class DateTimeFormatAdapter(val data: MutableList<DateTimeItem>): RecyclerView.Adapter<DateTimeFormatAdapter.VH>(){
+class DateTimeFormatAdapter(val data: MutableList<DateTimeItem>) :
+    RecyclerView.Adapter<DateTimeFormatAdapter.VH>() {
 
 
     var listener: Listener? = null
 
-    class VH(val binding: RvDateTimeFormatBinding): RecyclerView.ViewHolder(binding.root)
+    class VH(val binding: RvDateTimeFormatBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val bindng = RvDateTimeFormatBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val bindng =
+            RvDateTimeFormatBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return VH(bindng)
     }
 

@@ -10,7 +10,7 @@ import com.text.card.core.ColorData
 import com.text.card.databinding.FragmentColorBinding
 import com.text.card.ui.adapter.ColorAdapter
 
-class ColorFragment(val pageIndex: Int): Fragment() {
+class ColorFragment(val pageIndex: Int) : Fragment() {
     private lateinit var mBinding: FragmentColorBinding
     private val colorDataList = mutableListOf<ColorData>()
 

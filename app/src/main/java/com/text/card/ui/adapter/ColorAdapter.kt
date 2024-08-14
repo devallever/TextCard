@@ -2,14 +2,13 @@ package com.text.card.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.text.card.core.ColorData
-import com.text.card.core.TemplateModel
 import com.text.card.databinding.RvColorBinding
 
-class ColorAdapter(val data: MutableList<ColorData> = mutableListOf()): RecyclerView.Adapter<ColorAdapter.VH>() {
+class ColorAdapter(val data: MutableList<ColorData> = mutableListOf()) :
+    RecyclerView.Adapter<ColorAdapter.VH>() {
 
     var itemClick: ItemClick? = null
 
@@ -25,7 +24,7 @@ class ColorAdapter(val data: MutableList<ColorData> = mutableListOf()): Recycler
     override fun onBindViewHolder(holder: VH, position: Int) {
         val binding = holder.binding
         binding.apply {
-            val item =  data[position]
+            val item = data[position]
             val colorList = item.colorValue
             gradientCircleView.setColorList(colorList)
 
