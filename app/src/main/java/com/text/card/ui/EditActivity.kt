@@ -25,6 +25,7 @@ import com.text.card.ui.adapter.Pager2Adapter
 import com.text.card.ui.adapter.SwitchItemAdapter
 import com.text.card.ui.adapter.TemplateItemAdapter
 import com.text.card.ui.dialog.DateTimeFormatDialog
+import com.text.card.ui.dialog.WordCountFormatDialog
 import com.text.card.viewmodel.EditViewMode
 
 class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
@@ -41,6 +42,15 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
         DateTimeFormatDialog {text, format ->
             TemplateManager.currentTemplate.getDateView().text = text
             TextCardCore.cardData.dateFormatType = format
+            TextCardCore.saveCardData()
+        }
+    }
+
+    private val mWordFormatDialog by lazy {
+        WordCountFormatDialog {
+            val etContent = TemplateManager.currentTemplate.getContentView()
+            TemplateManager.currentTemplate.getWordCountView().text = getString(it, etContent.text.toString().length)
+            TextCardCore.cardData.wordCountFormatType = it
             TextCardCore.saveCardData()
         }
     }
@@ -365,13 +375,16 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             getDateView().setOnClickListener {
                 mDateTimeFormatDialog.show(supportFragmentManager)
             }
+            getWordCountView().setOnClickListener {
+                mWordFormatDialog.show(supportFragmentManager)
+            }
 
             getTitleView().addTextChangedListener {
                 TextCardCore.cardData.title = it?.toString()?:""
             }
             getContentView().addTextChangedListener {
                 TextCardCore.cardData.text = it?.toString()?:""
-                getWordCountView().text = "word: ${getContentView().text.toString().length}"
+                getWordCountView().text = getString(TextCardCore.cardData.wordCountFormatType, getContentView().text.toString().length)
             }
             getAuthorView().addTextChangedListener {
                 TextCardCore.cardData.author = it?.toString()?:""
@@ -396,7 +409,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             //author
             getAuthorView().setText(cardData.author)
             //word
-            getWordCountView().setText("work: ${getContentView().text.toString().length}")
+            getWordCountView().text = getString(cardData.wordCountFormatType, getContentView().text.toString().length)
 
             //bgColor
 

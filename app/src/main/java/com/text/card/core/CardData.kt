@@ -9,7 +9,7 @@ class CardData {
     var title = ""
     var text = ""
     var author = ""
-    var wordCountFormatType = 0
+    var wordCountFormatType = WordCountFormat.FORMAT_COUNT_WORD
     var qrTitle = ""
     var qrDesc = ""
 

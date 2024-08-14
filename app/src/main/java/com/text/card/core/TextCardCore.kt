@@ -65,6 +65,12 @@ object TextCardCore {
         }
     }
 
+    val wordCountFormatData = mutableListOf<WordFormatItem>().apply {
+        WordCountFormat.FORMAT_LIST.map {
+            add(WordFormatItem(it, it == cardData.wordCountFormatType))
+        }
+    }
+
     private const val KEY_CARD_DATA = "KEY_CARD_DATA"
 
     fun saveCardData() {
