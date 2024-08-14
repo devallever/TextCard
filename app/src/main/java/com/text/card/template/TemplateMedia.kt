@@ -18,15 +18,38 @@ class TemplateMedia : TemplateModel<TemplateMediaBinding>() {
             //light color
             mutableListOf(
                 ColorData.BLUE_CYAN_GRADIENT,
-                ColorData.BLUE_PINK_GRADIENT
+                ColorData.BLUE_PINK_GRADIENT,
+                ColorData.BLUE_LIME_GRADIENT,
+                ColorData.PINK_BLUE_GRADIENT,
+                ColorData.BLUE_VIOLET_GRADIENT,
+                ColorData.SKY_ORANGE_GRADIENT,
+                ColorData.PURPLE_YELLOW_GRADIENT,
+                ColorData.PINK_GRADIENT,
+                ColorData.PINK_RED_GRADIENT,
+                ColorData.RED_ORANGE_GRADIENT,
+                ColorData.LIGHT_DARK_ORANGE_GRADIENT,
+                ColorData.LIGHT_BLUE_PURPLE_GRADIENT,
+                ColorData.YELLOW_ORANGE_GRADIENT,
+                ColorData.GREEN_GRADIENT,
+                ColorData.GRAY_GRADIENT
             ),
             TemplateBgColor.COLOR_LIGHT,
         ),
         //dark color
         TemplateBgColor(
             mutableListOf(
-                ColorData.DARK_BLUE_GRADIENT,
-                ColorData.DARK_INDIGO_GRADIENT
+                ColorData.DARK_DARK_BLUE_GRADIENT,
+                ColorData.DARK_DARK_INDIGO_GRADIENT,
+                ColorData.DARK_DARK_SKY_GRADIENT,
+                ColorData.DARK_DARK_CYAN_GRADIENT,
+                ColorData.DARK_DARK_VIOLET_GRADIENT,
+                ColorData.DARK_DARK_FUSHSIA_GRADIENT,
+                ColorData.DARK_DARK_ROSE_GRADIENT,
+                ColorData.DARK_DARK_EMERALD_GRADIENT,
+                ColorData.DARK_DARK_GRAY_GRADIENT,
+                ColorData.DARK_DARK_SLATE_GRADIENT,
+                ColorData.DARK_DARK_NEUTRAL_GRADIENT,
+                ColorData.DARK_DARK_STONE_GRADIENT
             ),
             TemplateBgColor.COLOR_DARK,
         )

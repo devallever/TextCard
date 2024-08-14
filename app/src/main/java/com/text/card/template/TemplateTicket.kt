@@ -25,8 +25,8 @@ class TemplateTicket : TemplateModel<TemplateMediaBinding>() {
         //dark color
         TemplateBgColor(
             mutableListOf(
-                ColorData.DARK_BLUE_GRADIENT,
-                ColorData.DARK_INDIGO_GRADIENT
+                ColorData.DARK_DARK_BLUE_GRADIENT,
+                ColorData.DARK_DARK_INDIGO_GRADIENT
             ),
             TemplateBgColor.COLOR_DARK,
         )

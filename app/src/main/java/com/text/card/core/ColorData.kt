@@ -14,6 +14,19 @@ data class ColorData(
             ColorData("Blue cyan gradient", mutableListOf("#78dac5", "#60a5f9"))
         val BLUE_PINK_GRADIENT =
             ColorData("Blue pink gradient", mutableListOf("#d2c9d9", "#39befa"))
+        val BLUE_LIME_GRADIENT = ColorData("Blue lime gradient", mutableListOf("#a0e59b", "#7fc3ed"))
+        val PINK_BLUE_GRADIENT = ColorData("Pink blue gradient", mutableListOf("#39befa", "#d2c9d9"))
+        val BLUE_VIOLET_GRADIENT = ColorData("Blue violet gradient", mutableListOf("#b3bffd", "#8b8cf9"))
+        val SKY_ORANGE_GRADIENT = ColorData("Sky orange gradient", mutableListOf("#e2d4c5", "#9fcbfd"))
+        val PURPLE_YELLOW_GRADIENT = ColorData("Purple yellow gradient", mutableListOf("#f3e7d7", "#dabdff"))
+        val PINK_GRADIENT = ColorData("Pink gradient", mutableListOf("#fdbdbd", "#fa8280"))
+        val PINK_RED_GRADIENT = ColorData("Pink red gradient", mutableListOf("#f67286", "#f471b5"))
+        val RED_ORANGE_GRADIENT = ColorData("Red orange gradient", mutableListOf("#fdab99", "#fdc283"))
+        val LIGHT_DARK_ORANGE_GRADIENT =  ColorData("Dark orange gradient", mutableListOf("#fde589", "#fd9641"))
+        val LIGHT_BLUE_PURPLE_GRADIENT =  ColorData("Light blue purple gradient", mutableListOf("#c4d8fd", "#d3b4fd"))
+        val YELLOW_ORANGE_GRADIENT =  ColorData("Yellow orange gradient", mutableListOf("#FDF19C", "#FEDC63"))
+        val GREEN_GRADIENT =  ColorData("Green gradient", mutableListOf("#80EDAF", "#50DB9F"))
+        val GRAY_GRADIENT = ColorData("Gray gradient", mutableListOf("#f8f8f8", "#f4f4f4"))
 
         //pure light
         val CYAN = ColorData("Cyan", mutableListOf("#07b6d1", "#07b6d1"))
@@ -51,9 +64,21 @@ data class ColorData(
         //ColorData("", mutableListOf("#", "#"))
 
 
-        val DARK_BLUE_GRADIENT =
+        val DARK_DARK_BLUE_GRADIENT =
             ColorData("Dark blue gradient", mutableListOf("#14214d", "#061735"))
-        val DARK_INDIGO_GRADIENT =
+        val DARK_DARK_INDIGO_GRADIENT =
             ColorData("Dark indigo gradient", mutableListOf("#272767", "#100d21"))
+        val DARK_DARK_SKY_GRADIENT = ColorData("Dark sky gradient", mutableListOf("#0c405e", "#071420"))
+        val DARK_DARK_CYAN_GRADIENT = ColorData("Dark cyan gradient", mutableListOf("#0f3346", "#071320"))
+        val DARK_DARK_VIOLET_GRADIENT =ColorData("Dark violet gradient", mutableListOf("#40197d", "#150a25"))
+        val DARK_DARK_FUSHSIA_GRADIENT = ColorData("Dark fushsia gradient", mutableListOf("#591868", "#1f0d3d"))
+        val DARK_DARK_ROSE_GRADIENT = ColorData("Dark rose gradient", mutableListOf("#70102c", "#1d080c"))
+        val DARK_DARK_EMERALD_GRADIENT = ColorData("Dark emerald gradient", mutableListOf("#0d4224", "#03160c"))
+        val DARK_DARK_GRAY_GRADIENT = ColorData("Dark gray gradient", mutableListOf("#1a2432", "#0d1221"))
+        val DARK_DARK_SLATE_GRADIENT = ColorData("Dark slate gradient", mutableListOf("#192437", "#0d1025"))
+        val DARK_DARK_NEUTRAL_GRADIENT = ColorData("Dark neutral gradient", mutableListOf("#343434", "#0f0f0f"))
+        val DARK_DARK_STONE_GRADIENT = ColorData("Dark stone gradient", mutableListOf("#44423d", "#191412"))
+
+        // ColorData("", mutableListOf("#", "#"))
     }
 }
