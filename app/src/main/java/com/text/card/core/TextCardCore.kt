@@ -58,6 +58,13 @@ object TextCardCore {
         }
     }
 
+    val dateTimeFormatData = mutableListOf<DateTimeItem>().apply {
+        val time = System.currentTimeMillis()
+        DateFormat.FORMAT_LIST.map {
+            add(DateTimeItem(time, it, it == cardData.dateFormatType))
+        }
+    }
+
     private const val KEY_CARD_DATA = "KEY_CARD_DATA"
 
     fun saveCardData() {

@@ -28,6 +28,7 @@ class IconTypeAdapter(val data: MutableList<IconTypeData>) :
         val binding = holder.binding
         binding.apply {
             val typeItem = data[position]
+            tvIconTypeName.text = typeItem.name
             rvIcon.layoutManager = GridLayoutManager(root.context, 7)
             rvIcon.adapter = IconAdapter(typeItem.iconList).apply {
                 listener = object : IconAdapter.Listener {

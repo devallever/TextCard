@@ -29,6 +29,14 @@ object TemplateManager {
         templateData.add(TemplateSolid())
         templateData.add(TemplateBento())
         templateData.add(TemplateTicket())
+
+        //set Default
+        if (TextCardCore.cardData.templateName.isEmpty()) {
+            templateData[0].selected = true
+            currentTemplate = templateData[0]
+            TextCardCore.cardData.templateName = templateData[0].getTemplateName()
+        }
+
         templateData.map {
             val selected = TextCardCore.cardData.templateName == it.getTemplateName()
             it.selected = selected
@@ -36,13 +44,6 @@ object TemplateManager {
                 currentTemplate = it
             }
         }
-
-        if (currentTemplate == null) {
-            templateData[0].selected = true
-            currentTemplate = templateData[0]
-            TextCardCore.cardData.templateName = templateData[0].getTemplateName()
-        }
-
     }
 
     fun initTemplateView() {

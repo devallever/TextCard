@@ -10,6 +10,7 @@ import com.boat.vpn.demo.util.StatusBarUtil
 import com.text.card.R
 import com.text.card.base.AppActivity
 import com.text.card.core.ColorData
+import com.text.card.core.DateFormat
 import com.text.card.core.SwitchItem
 import com.text.card.core.TemplateManager
 import com.text.card.core.TemplateModel
@@ -23,6 +24,7 @@ import com.text.card.helper.toast
 import com.text.card.ui.adapter.Pager2Adapter
 import com.text.card.ui.adapter.SwitchItemAdapter
 import com.text.card.ui.adapter.TemplateItemAdapter
+import com.text.card.ui.dialog.DateTimeFormatDialog
 import com.text.card.viewmodel.EditViewMode
 
 class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
@@ -31,6 +33,14 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
         IconDialog {
             TemplateManager.currentTemplate.getIconView().setImageResource(it)
             TextCardCore.cardData.iconResId = it
+            TextCardCore.saveCardData()
+        }
+    }
+
+    private val mDateTimeFormatDialog by lazy {
+        DateTimeFormatDialog {text, format ->
+            TemplateManager.currentTemplate.getDateView().text = text
+            TextCardCore.cardData.dateFormatType = format
             TextCardCore.saveCardData()
         }
     }
@@ -353,7 +363,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 mIconDialog.show(supportFragmentManager)
             }
             getDateView().setOnClickListener {
-                toast("date")
+                mDateTimeFormatDialog.show(supportFragmentManager)
             }
 
             getTitleView().addTextChangedListener {
@@ -377,6 +387,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             //icon
             getIconView().setImageResource(cardData.iconResId)
             //date always today
+            getDateView().text = DateFormat.format(cardData.dateFormatType, System.currentTimeMillis())
 
             //title
             getTitleView().setText(cardData.title)
