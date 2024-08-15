@@ -40,5 +40,8 @@
     <color name="color_60ffffff">#60ffffff</color>
     <color name="color_40ffffff">#40ffffff</color>
     <color name="color_20ffffff">#20ffffff</color>
+    <color name="color_F5F5F5">#F5F5F5</color>
+    <color name="color_0A0A0A">#0A0A0A</color>
+    <color name="color_171717">#171717</color>
 
 </resources>

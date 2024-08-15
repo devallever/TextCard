@@ -32,6 +32,10 @@ class CardData {
         return bgColorNameMap[TemplateManager.currentTemplate.getTemplateName()] ?: ""
     }
 
+    fun getBgColor(): String {
+        return TemplateManager.currentTemplate.getBgColorData().colorValue[1]
+    }
+
     fun getBgColorType(): Int {
         return bgColorTypeMap[TemplateManager.currentTemplate.getTemplateName()] ?: 0
     }

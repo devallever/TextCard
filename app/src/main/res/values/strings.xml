@@ -11,4 +11,7 @@
     <string name="word_format_count_word">%s words</string>
     <string name="word_format_count">%s</string>
     <string name="word_format">Word Format</string>
+    <string name="title_hint">Title here</string>
+    <string name="text_hint">Text here</string>
+    <string name="author_hint">Author/Quote here...</string>
 </resources>
