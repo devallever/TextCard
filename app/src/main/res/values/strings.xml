@@ -14,4 +14,6 @@
     <string name="title_hint">Title here</string>
     <string name="text_hint">Text here</string>
     <string name="author_hint">Author/Quote here...</string>
+    <string name="share">Share</string>
+    <string name="save_to_album">Save to album</string>
 </resources>

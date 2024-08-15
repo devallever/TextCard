@@ -1,9 +1,18 @@
 package com.text.card.ui
 
+import android.Manifest
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.os.Build
+import android.os.Environment
 import android.view.View
+import android.view.ViewGroup
+import android.widget.PopupWindow
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.boat.vpn.demo.util.StatusBarUtil
@@ -16,10 +25,14 @@ import com.text.card.core.TemplateManager
 import com.text.card.core.TemplateModel
 import com.text.card.core.TextCardCore
 import com.text.card.databinding.ActivityEditBinding
+import com.text.card.databinding.PopExportBinding
 import com.text.card.helper.DisplayHelper
 import com.text.card.helper.KeyboardUtils
 import com.text.card.helper.KeyboardUtils.SoftKeyboardListener.OnSoftKeyboardChangeListener
+import com.text.card.helper.PermissionHelper
 import com.text.card.helper.ViewHelper
+import com.text.card.helper.copyToAlbum
+import com.text.card.helper.toast
 import com.text.card.ui.adapter.Pager2Adapter
 import com.text.card.ui.adapter.SwitchItemAdapter
 import com.text.card.ui.adapter.TemplateItemAdapter
@@ -27,8 +40,26 @@ import com.text.card.ui.dialog.DateTimeFormatDialog
 import com.text.card.ui.dialog.IconDialog
 import com.text.card.ui.dialog.WordCountFormatDialog
 import com.text.card.viewmodel.EditViewMode
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
+
 
 class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
+
+    private val RC_PERMISSION = 1000
+    private val mPermissionsList = ArrayList<String>().apply {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            add(Manifest.permission.READ_MEDIA_IMAGES)
+        } else {
+            add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+    }
+
+    private lateinit var mPopBinding: PopExportBinding
+    private lateinit var mPopExport: PopupWindow
 
     private val mIconDialog by lazy {
         IconDialog {
@@ -258,13 +289,42 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             switchContent.adapter = switchAdapter
         }
 
+        initPopMenu()
+
         initClickListener()
+
+    }
+
+    private fun initPopMenu() {
+        mPopBinding = PopExportBinding.inflate(layoutInflater)
+
+        mPopExport = PopupWindow(
+            mPopBinding.root,
+            DisplayHelper.dip2px(240),
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
 
     }
 
     override fun onDestroy() {
         super.onDestroy()
         TemplateManager.destroyTemplate()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == RC_PERMISSION) {
+            val hasPermission =
+                PermissionHelper.hasPermissionOrigin(this@EditActivity, mPermissionsList)
+            if (hasPermission) {
+                saveView()
+            }
+        }
     }
 
     private fun initClickListener() {
@@ -360,6 +420,35 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 switchContent.isVisible = true
 
                 updateContentMarginBottom()
+            }
+
+            mPopBinding.btnSave.setOnClickListener {
+                mPopExport.dismiss()
+                val hasPermission =
+                    PermissionHelper.hasPermissionOrigin(this@EditActivity, mPermissionsList)
+                if (hasPermission) {
+                    saveView()
+                } else {
+                    // 请求权限
+                    val array: Array<String> =
+                        mPermissionsList.toArray(arrayOfNulls<String>(mPermissionsList.size)) // 使用ArrayList的size作为参数也可以，例如：new Integer[list.size()]
+                    ActivityCompat.requestPermissions(
+                        this@EditActivity,
+                        array,
+                        RC_PERMISSION
+                    );
+                }
+            }
+            mPopBinding.btnShare.setOnClickListener {
+                mPopExport.dismiss()
+                toast("Share")
+            }
+            btnExport.setOnClickListener {
+                mPopExport.showAsDropDown(
+                    btnExport,
+                    0,
+                    DisplayHelper.dip2px(22)
+                )
             }
         }
     }
@@ -529,4 +618,44 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             mBinding.tvColorStyle.text = "Light"
         }
     }
+
+    private fun saveView() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            val fileName = "${System.currentTimeMillis()}.jpg"
+            val path =
+                "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)}"
+            val result = saveViewAsImage(mBinding.scrollView, fileName, path)
+            if (result) {
+                toast("save success: $path")
+            } else {
+                toast("save fail")
+            }
+        }
+    }
+
+    private suspend fun saveViewAsImage(view: View, fileName: String, path: String) =
+        withContext(Dispatchers.IO) {
+
+            // 创建一个和View相同大小的空的Bitmap
+            val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+            // 使用上述创建的Bitmap，创建一个Canvas
+            val canvas = Canvas(bitmap)
+            // 将View绘制在Canvas上
+            view.draw(canvas)
+            // 将Bitmap写入到SD卡中
+            val file = File(this@EditActivity.cacheDir.absolutePath, fileName)
+            try {
+                val out = FileOutputStream(file)
+                bitmap.compress(Bitmap.CompressFormat.PNG, 90, out)
+                out.flush()
+                out.close()
+                file.copyToAlbum(this@EditActivity, fileName, getString(R.string.app_name))
+                file.delete()
+                return@withContext true
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            return@withContext false
+        }
 }
