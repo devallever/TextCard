@@ -8,6 +8,7 @@ import android.os.Environment
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -473,6 +474,22 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                     0,
                     DisplayHelper.dip2px(22)
                 )
+            }
+
+            ivClearText.setOnClickListener {
+                AlertDialog.Builder(this@EditActivity)
+                    .setMessage(R.string.clear_text_tips)
+                    .setTitle(R.string.clear_all_text)
+                    .setPositiveButton(R.string.clear) {dialog, which ->
+                        TemplateManager.currentTemplate.getTitleView().setText("")
+                        TemplateManager.currentTemplate.getContentView().setText("")
+                        TemplateManager.currentTemplate.getAuthorView().setText("")
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton(R.string.cancle) {dialog, which ->
+                        dialog.dismiss()
+                    }
+                    .show()
             }
         }
     }

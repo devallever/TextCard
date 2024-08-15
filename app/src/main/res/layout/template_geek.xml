@@ -117,7 +117,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@null"
-                        android:text="Auto"
+                        android:hint="@string/author_hint"
                         android:textColor="@color/color_60000000"
                         android:textColorHint="@color/color_60000000"
                         android:textSize="14sp"

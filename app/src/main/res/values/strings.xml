@@ -16,4 +16,8 @@
     <string name="author_hint">Author/Quote here...</string>
     <string name="share">Share</string>
     <string name="save_to_album">Save to album</string>
+    <string name="clear_text_tips">Are you sure you want to clear all text your input?</string>
+    <string name="clear_all_text">Clear All Text</string>
+    <string name="clear">Clear</string>
+    <string name="cancle">Cancel</string>
 </resources>
