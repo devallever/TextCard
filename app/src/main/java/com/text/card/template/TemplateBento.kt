@@ -17,16 +17,16 @@ class TemplateBento : TemplateModel<TemplateMediaBinding>() {
         TemplateBgColor(
             //light color
             mutableListOf(
-                ColorData.BLUE_CYAN_GRADIENT,
-                ColorData.BLUE_PINK_GRADIENT
+                ColorData.MEDIA_BLUE_CYAN_GRADIENT,
+                ColorData.MEDIA_BLUE_PINK_GRADIENT
             ),
             TemplateBgColor.COLOR_LIGHT,
         ),
         //dark color
         TemplateBgColor(
             mutableListOf(
-                ColorData.DARK_DARK_BLUE_GRADIENT,
-                ColorData.DARK_DARK_INDIGO_GRADIENT
+                ColorData.MEDIA_DARK_BLUE_GRADIENT,
+                ColorData.MEDIA_DARK_INDIGO_GRADIENT
             ),
             TemplateBgColor.COLOR_DARK,
         )
