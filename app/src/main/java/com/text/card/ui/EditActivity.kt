@@ -30,6 +30,7 @@ import com.text.card.helper.DisplayHelper
 import com.text.card.helper.KeyboardUtils
 import com.text.card.helper.KeyboardUtils.SoftKeyboardListener.OnSoftKeyboardChangeListener
 import com.text.card.helper.PermissionHelper
+import com.text.card.helper.ShareHelper
 import com.text.card.helper.ViewHelper
 import com.text.card.helper.copyToAlbum
 import com.text.card.helper.toast
@@ -324,7 +325,13 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             val hasPermission =
                 PermissionHelper.hasPermissionOrigin(this@EditActivity, mPermissionsList)
             if (hasPermission) {
-                saveView()
+                saveView { result, path->
+                    if (result) {
+                        toast("save success: $path")
+                    } else {
+                        toast("save fail")
+                    }
+                }
             }
         }
     }
@@ -429,7 +436,13 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 val hasPermission =
                     PermissionHelper.hasPermissionOrigin(this@EditActivity, mPermissionsList)
                 if (hasPermission) {
-                    saveView()
+                    saveView{ result, path->
+                        if (result) {
+                            toast("save success: $path")
+                        } else {
+                            toast("save fail")
+                        }
+                    }
                 } else {
                     // 请求权限
                     val array: Array<String> =
@@ -443,7 +456,16 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             }
             mPopBinding.btnShare.setOnClickListener {
                 mPopExport.dismiss()
-                toast("Share")
+                //
+                val path = "${cacheDir.absolutePath}${File.separator}${System.currentTimeMillis()}.jpg"
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val result = saveViewAsImageToCache(scrollView, path)
+                    if (result) {
+                        ShareHelper.shareImage(this@EditActivity, path)
+                    } else {
+                        toast("Share fail")
+                    }
+                }
             }
             btnExport.setOnClickListener {
                 mPopExport.showAsDropDown(
@@ -621,17 +643,13 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
         }
     }
 
-    private fun saveView() {
+    private fun saveView(cb: (success: Boolean, path: String) -> Unit) {
         lifecycleScope.launch(Dispatchers.Main) {
             val fileName = "${System.currentTimeMillis()}.jpg"
             val path =
                 "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)}"
             val result = saveViewAsImage(mBinding.scrollView, fileName, path)
-            if (result) {
-                toast("save success: $path")
-            } else {
-                toast("save fail")
-            }
+            cb.invoke(result, "${path}${File.separator}${fileName}")
         }
     }
 
@@ -660,4 +678,25 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
 
             return@withContext false
         }
+
+    suspend fun saveViewAsImageToCache(view: View, filename: String?): Boolean {
+        // 创建一个和View相同大小的空的Bitmap
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        // 使用上述创建的Bitmap，创建一个Canvas
+        val canvas = Canvas(bitmap)
+        // 将View绘制在Canvas上
+        view.draw(canvas)
+        // 将Bitmap写入到SD卡中
+        val file = File(filename)
+        try {
+            val out = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, out)
+            out.flush()
+            out.close()
+            return true
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return false
+    }
 }
