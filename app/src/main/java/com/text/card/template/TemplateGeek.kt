@@ -10,12 +10,11 @@ import com.text.card.core.ColorData
 import com.text.card.core.TemplateBgColor
 import com.text.card.core.TemplateModel
 import com.text.card.core.TextCardCore
-import com.text.card.databinding.TemplateBentoBinding
-import com.text.card.databinding.TemplateMediaBinding
+import com.text.card.databinding.TemplateGeekBinding
 import com.text.card.helper.log
 import com.text.card.ui.widget.GradientBackgroundDrawable
 
-class TemplateGeek : TemplateModel<TemplateBentoBinding>() {
+class TemplateGeek : TemplateModel<TemplateGeekBinding>() {
     private val colorList = mutableListOf(
         TemplateBgColor(
             //light color
@@ -40,29 +39,26 @@ class TemplateGeek : TemplateModel<TemplateBentoBinding>() {
         //dark color
         TemplateBgColor(
             mutableListOf(
-                ColorData.BENTO_BLUE_CYAN_GRADIENT,
-                ColorData.BENTO_BLUE_PINK_GRADIENT,
-                ColorData.BENTO_BLUE_LIME_GRADIENT,
-                ColorData.BENTO_PINK_BLUE_GRADIENT,
-                ColorData.BENTO_BLUE_VIOLET_GRADIENT,
-                ColorData.BENTO_SKY_ORANGE_GRADIENT,
-                ColorData.BENTO_PURPLE_YELLOW_GRADIENT,
-                ColorData.BENTO_PINK_GRADIENT,
-                ColorData.BENTO_PINK_RED_GRADIENT,
-                ColorData.BENTO_RED_ORANGE_GRADIENT,
-                ColorData.BENTO_LIGHT_DARK_ORANGE_GRADIENT,
-                ColorData.BENTO_LIGHT_BLUE_PURPLE_GRADIENT,
-                ColorData.BENTO_YELLOW_ORANGE_GRADIENT,
-                ColorData.BENTO_GREEN_GRADIENT,
-                ColorData.BENTO_GRAY_GRADIENT
+                ColorData.MEDIA_DARK_BLUE_GRADIENT,
+                ColorData.MEDIA_DARK_INDIGO_GRADIENT,
+                ColorData.MEDIA_DARK_SKY_GRADIENT,
+                ColorData.MEDIA_DARK_CYAN_GRADIENT,
+                ColorData.MEDIA_DARK_VIOLET_GRADIENT,
+                ColorData.MEDIA_DARK_FUSHSIA_GRADIENT,
+                ColorData.MEDIA_DARK_ROSE_GRADIENT,
+                ColorData.MEDIA_DARK_EMERALD_GRADIENT,
+                ColorData.MEDIA_DARK_GRAY_GRADIENT,
+                ColorData.MEDIA_DARK_SLATE_GRADIENT,
+                ColorData.MEDIA_DARK_NEUTRAL_GRADIENT,
+                ColorData.MEDIA_DARK_STONE_GRADIENT
             ),
             TemplateBgColor.COLOR_DARK,
         )
     )
 
-    override fun inflateView() = TemplateBentoBinding.inflate(LayoutInflater.from(App.context))
+    override fun inflateView() = TemplateGeekBinding.inflate(LayoutInflater.from(App.context))
     override fun getTemplateName(): String {
-        return "Bento"
+        return "Geek"
     }
 
     override fun getTemplateCover(): Int {
@@ -78,26 +74,42 @@ class TemplateGeek : TemplateModel<TemplateBentoBinding>() {
 
     override fun showOrHideIcon(show: Boolean) {
         mBinding?.ivIcon?.isVisible = show
+        mBinding?.iconContainer?.isVisible = show
     }
 
     override fun showOrHideDate(show: Boolean) {
         mBinding?.tvDate?.isVisible = show
+        checkHideMainContentContainer()
     }
 
     override fun showOrHideTitle(show: Boolean) {
         mBinding?.etTitle?.isVisible = show
+        checkHideMainContentContainer()
     }
 
     override fun showOrHideContent(show: Boolean) {
         mBinding?.etContent?.isVisible = show
+        checkHideMainContentContainer()
     }
 
     override fun showOrHideAuthor(show: Boolean) {
         mBinding?.etAuthor?.isVisible = show
+        checkHideMainContentContainer()
     }
 
     override fun showOrHideWordCount(show: Boolean) {
         mBinding?.tvWordCount?.isVisible = show
+        checkHideMainContentContainer()
+    }
+
+    private fun checkHideMainContentContainer() {
+        mBinding?.mainContainer?.isVisible =
+            mBinding?.tvDate?.isVisible == true ||
+                    mBinding?.etTitle?.isVisible == true ||
+                    mBinding?.etContent?.isVisible == true ||
+                    mBinding?.etAuthor?.isVisible == true ||
+                    mBinding?.tvWordCount?.isVisible == true
+
     }
 
     override fun showOrHideQrCode(show: Boolean) {
@@ -106,6 +118,7 @@ class TemplateGeek : TemplateModel<TemplateBentoBinding>() {
 
     override fun showOrHideMark(show: Boolean) {
         mBinding?.waterMark?.isVisible = show
+        mBinding?.waterMarkContainer?.isVisible = show
     }
 
     override fun updateCardBg(isDark: Boolean, data: ColorData) {
@@ -115,7 +128,7 @@ class TemplateGeek : TemplateModel<TemplateBentoBinding>() {
 
             //background
             templateBg.background = GradientBackgroundDrawable().apply {
-                setColorList(
+                setColorListGradient(
                     data.colorValue,
                     templateBg.width.toFloat(),
                     templateBg.height.toFloat()
@@ -125,50 +138,70 @@ class TemplateGeek : TemplateModel<TemplateBentoBinding>() {
             //cardView
             val cardBgColor = ContextCompat.getColor(
                 App.context,
-                if (isDark) R.color.color_0A0A0A else R.color.color_F5F5F5
+                if (isDark) R.color.color_A0000000 else R.color.color_A0ffffff
             )
             cardView.setCardBackgroundColor(cardBgColor)
 
             //icon
-            ivIcon.setBackgroundResource(if (isDark) R.drawable.shape_bento_item_bg_dark else R.drawable.shape_bento_item_bg)
+            iconContainer.setBackgroundResource(if (isDark) R.drawable.shape_geek_item_bg_dark else R.drawable.shape_geek_item_bg)
             ivIcon.setColorFilter(
-                Color.parseColor(TextCardCore.cardData.getBgColor())
+                ContextCompat.getColor(
+                    App.context,
+                    if (isDark) R.color.color_40ffffff else R.color.color_80ffffff
+                )
             )
             TextCardCore.cardData.getBgColorName()
 
-            //Date
-            tvDate.setTextColor(App.getColor(if (isDark) R.color.color_80ffffff else R.color.color_80000000))
-            tvDate.setBackgroundResource(if (isDark) R.drawable.shape_bento_item_bg_dark else R.drawable.shape_bento_item_bg)
+            iconEmpty1.setBackgroundResource(if (isDark) R.drawable.shape_geek_empty_text_dark else R.drawable.shape_geek_empty_text)
+            iconEmpty2.setBackgroundResource(if (isDark) R.drawable.shape_geek_empty_text_dark else R.drawable.shape_geek_empty_text)
 
+
+            mainContainer.setBackgroundResource(if (isDark) R.drawable.shape_geek_item_bg_dark else R.drawable.shape_geek_item_bg)
+            //Date
+            tvDate.setTextColor(App.getColor(if (isDark) R.color.color_40ffffff else R.color.color_60000000))
+//            tvDate.setBackgroundResource(if (isDark) R.drawable.shape_bento_item_bg_dark else R.drawable.shape_geek_item_bg)
 
             //title
-            etTitle.setTextColor(Color.parseColor(TextCardCore.cardData.getBgColor()))
-            etTitle.setHintTextColor(App.getColor(if (isDark) R.color.color_40ffffff else R.color.color_40000000))
-            etTitle.setBackgroundResource(if (isDark) R.drawable.shape_bento_item_bg_dark else R.drawable.shape_bento_item_bg)
+            etTitle.setTextColor(App.getColor(if (isDark) R.color.white else R.color.black))
+            etTitle.setHintTextColor(App.getColor(if (isDark) R.color.color_40ffffff else R.color.color_60000000))
+//            etTitle.setBackgroundResource(if (isDark) R.drawable.shape_bento_item_bg_dark else R.drawable.shape_bento_item_bg)
             //content
-            etContent.setTextColor(App.getColor(if (isDark) R.color.white else R.color.black))
-            etContent.setHintTextColor(App.getColor(if (isDark) R.color.color_40ffffff else R.color.color_40000000))
-            etContent.setBackgroundResource(if (isDark) R.drawable.shape_bento_item_bg_dark else R.drawable.shape_bento_item_bg)
+            etContent.setTextColor(App.getColor(if (isDark) R.color.color_A0ffffff else R.color.black))
+            etContent.setHintTextColor(App.getColor(if (isDark) R.color.color_40ffffff else R.color.color_60000000))
+//            etContent.setBackgroundResource(if (isDark) R.drawable.shape_bento_item_bg_dark else R.drawable.shape_bento_item_bg)
+
 
 
             //author
-            etAuthor.setTextColor(App.getColor(if (isDark) R.color.color_80ffffff else R.color.color_80000000))
-            etAuthor.setHintTextColor(App.getColor(if (isDark) R.color.color_40ffffff else R.color.color_40000000))
-            etAuthor.setBackgroundResource(if (isDark) R.drawable.shape_bento_item_bg_dark else R.drawable.shape_bento_item_bg)
+            etAuthor.setTextColor(App.getColor(if (isDark) R.color.color_40ffffff else R.color.color_60000000))
+            etAuthor.setHintTextColor(App.getColor(if (isDark) R.color.color_40ffffff else R.color.color_60000000))
+//            etAuthor.setBackgroundResource(if (isDark) R.drawable.shape_bento_item_bg_dark else R.drawable.shape_bento_item_bg)
             //word
-            tvWordCount.setTextColor(App.getColor(if (isDark) R.color.color_80ffffff else R.color.color_80000000))
-            tvWordCount.setBackgroundResource(if (isDark) R.drawable.shape_bento_item_bg_dark else R.drawable.shape_bento_item_bg)
+            tvWordCount.setTextColor(App.getColor(if (isDark) R.color.color_40ffffff else R.color.color_60000000))
+//            tvWordCount.setBackgroundResource(if (isDark) R.drawable.shape_bento_item_bg_dark else R.drawable.shape_geek_item_bg)
 
             //qrcode
-            qrCode.setBackgroundResource(if (isDark) R.drawable.shape_bento_item_bg_dark else R.drawable.shape_bento_item_bg)
+            qrCode.setBackgroundResource(if (isDark) R.drawable.shape_geek_item_bg_dark else R.drawable.shape_geek_item_bg)
             ivQrCode.setColorFilter(App.getColor(if (isDark) R.color.color_60ffffff else R.color.color_60000000))
-            tvQrCodeTitle.setTextColor(App.getColor(if (isDark) R.color.color_80ffffff else R.color.color_80000000))
-            tvQrCodeDesc.setTextColor(App.getColor(if (isDark) R.color.color_60ffffff else R.color.color_60000000))
+            tvQrCodeTitle.setTextColor(App.getColor(if (isDark) R.color.color_60ffffff else R.color.color_60000000))
+            tvQrCodeDesc.setTextColor(App.getColor(if (isDark) R.color.color_40ffffff else R.color.color_40000000))
 
             //water mark
-            tvWater.setTextColor(App.getColor(if (isDark) R.color.color_80ffffff else R.color.color_80000000))
-            waterMarkContainer.setBackgroundResource(if (isDark) R.drawable.shape_bento_item_bg_dark else R.drawable.shape_bento_item_bg)
+            tvWater.setTextColor(App.getColor(if (isDark) R.color.color_60ffffff else R.color.color_60000000))
+            waterMarkContainer.setBackgroundResource(if (isDark) R.drawable.shape_geek_item_bg_dark else R.drawable.shape_geek_item_bg)
+            markEmpty1.setBackgroundResource(if (isDark) R.drawable.shape_geek_empty_text_dark else R.drawable.shape_geek_empty_text)
+            markEmpty2.setBackgroundResource(if (isDark) R.drawable.shape_geek_empty_text_dark else R.drawable.shape_geek_empty_text)
 
+            //bottom gradient
+            val gradientEnd = TextCardCore.cardData.getBgColor().replace("#", "#")
+            val gradientStart = "#00000000"
+            bottomGradient.background =  GradientBackgroundDrawable().apply {
+                setColorListGradient(
+                    listOf(gradientStart, gradientEnd),
+                    bottomGradient.width.toFloat(),
+                    bottomGradient.height.toFloat()
+                )
+            }
         }
     }
 
@@ -183,6 +216,7 @@ class TemplateGeek : TemplateModel<TemplateBentoBinding>() {
     override fun getAuthorView() = mBinding?.etAuthor!!
 
     override fun getWordCountView() = mBinding?.tvWordCount!!
+
 
 
 }

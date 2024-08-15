@@ -15,11 +15,9 @@ abstract class TemplateModel<VB : ViewBinding> {
     lateinit var bgColor: MutableList<TemplateBgColor>//0:light  1:dark
 
     fun getBgColorData(): ColorData {
-        getTemplateBgColor().map {
-            it.colorDataList.map {
-                if (it.selected) {
-                    return it
-                }
+        getTemplateBgColor()[TextCardCore.cardData.getBgColorType()].colorDataList.map {
+            if (it.selected) {
+                return it
             }
         }
         return getTemplateBgColor()[0].colorDataList[0]

@@ -1,6 +1,7 @@
 package com.text.card.core
 
 import com.text.card.R
+import com.text.card.helper.log
 
 class CardData {
     //card info
@@ -25,6 +26,7 @@ class CardData {
     }
 
     fun setBgColorType(colorType: Int) {
+        log("setBgColorType: ${colorType}")
         bgColorTypeMap[TemplateManager.currentTemplate.getTemplateName()] = colorType
     }
 
@@ -37,7 +39,9 @@ class CardData {
     }
 
     fun getBgColorType(): Int {
-        return bgColorTypeMap[TemplateManager.currentTemplate.getTemplateName()] ?: 0
+        val result = bgColorTypeMap[TemplateManager.currentTemplate.getTemplateName()]
+        log("getBgColorType: ${result}")
+        return result ?: 0
     }
 
     //swich

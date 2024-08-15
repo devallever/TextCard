@@ -47,4 +47,23 @@ class GradientBackgroundDrawable : Drawable() {
         )
         mPaint.setShader(shader)
     }
+
+    fun setColorListGradient(color: List<String>, width: Float, height: Float) {
+        val colorList = mutableListOf<Int>()
+        val locationList = mutableListOf<Float>()
+        color.map {
+            colorList.add(Color.parseColor(it))
+            locationList.add(0.5f)
+        }
+        val shader = LinearGradient(
+            width * 0.5f,
+            0f,
+            width * 0.5f,
+            height,
+            colorList.toIntArray(),
+            null,
+            Shader.TileMode.CLAMP
+        )
+        mPaint.setShader(shader)
+    }
 }

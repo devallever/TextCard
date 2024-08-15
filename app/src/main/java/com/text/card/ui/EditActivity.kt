@@ -271,6 +271,8 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             viewPager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
+                    TextCardCore.cardData.setBgColorType(position)
+                    TextCardCore.saveCardData()
                     if (position == 0) {
                         indicateFirst.setBackgroundResource(R.drawable.shape_google_blue_r45)
                         indicateSecond.setBackgroundResource(R.drawable.shape_999999_r45)
