@@ -7,6 +7,7 @@
     <!-- Required to maintain app compatibility. -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".App"
@@ -23,7 +24,9 @@
             android:name=".ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.TextCard">
+            android:theme="@style/Theme.TextCard"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,6 +37,10 @@
             android:name="com.text.card.ui.EditActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity android:name="com.text.card.ui.SettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.text.card.ui.BrowserActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

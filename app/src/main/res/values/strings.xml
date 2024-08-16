@@ -20,4 +20,10 @@
     <string name="clear_all_text">Clear All Text</string>
     <string name="clear">Clear</string>
     <string name="cancle">Cancel</string>
+    <string name="setting">Setting</string>
+    <string name="support_us">SUPPORT US</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="share_app">Share App</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="version">Version</string>
 </resources>

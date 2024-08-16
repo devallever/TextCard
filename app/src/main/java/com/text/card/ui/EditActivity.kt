@@ -27,6 +27,7 @@ import com.text.card.core.TemplateModel
 import com.text.card.core.TextCardCore
 import com.text.card.databinding.ActivityEditBinding
 import com.text.card.databinding.PopExportBinding
+import com.text.card.helper.ActivityHelper
 import com.text.card.helper.DisplayHelper
 import com.text.card.helper.KeyboardUtils
 import com.text.card.helper.KeyboardUtils.SoftKeyboardListener.OnSoftKeyboardChangeListener
@@ -339,6 +340,10 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
 
     private fun initClickListener() {
         mBinding.apply {
+            ivSetting.setOnClickListener {
+                ActivityHelper.startActivity(this@EditActivity, SettingActivity::class.java)
+            }
+
             btnDone.setOnClickListener {
                 KeyboardUtils.hideInput(this@EditActivity)
             }
