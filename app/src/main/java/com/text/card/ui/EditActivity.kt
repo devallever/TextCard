@@ -460,7 +460,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 //
                 val path = "${cacheDir.absolutePath}${File.separator}${System.currentTimeMillis()}.jpg"
                 lifecycleScope.launch(Dispatchers.IO) {
-                    val result = saveViewAsImageToCache(scrollView, path)
+                    val result = saveViewAsImageToCache(TemplateManager.currentTemplate.getTemplateContentView(), path)
                     if (result) {
                         ShareHelper.shareImage(this@EditActivity, path)
                     } else {
@@ -665,7 +665,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             val fileName = "${System.currentTimeMillis()}.jpg"
             val path =
                 "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)}"
-            val result = saveViewAsImage(mBinding.scrollView, fileName, path)
+            val result = saveViewAsImage(TemplateManager.currentTemplate.getTemplateContentView(), fileName, path)
             cb.invoke(result, "${path}${File.separator}${fileName}")
         }
     }

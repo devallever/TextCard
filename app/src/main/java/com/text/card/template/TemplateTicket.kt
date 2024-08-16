@@ -149,4 +149,6 @@ class TemplateTicket : TemplateModel<TemplateMediaBinding>() {
 
     override fun getWordCountView() = mBinding?.tvWordCount!!
 
+    override fun getTemplateContentView() = mBinding?.templateBg!!
+
 }

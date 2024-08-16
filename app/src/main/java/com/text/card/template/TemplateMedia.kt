@@ -154,7 +154,7 @@ class TemplateMedia : TemplateModel<TemplateMediaBinding>() {
             tvQrCodeDesc.setTextColor(App.getColor(if (isDark) R.color.color_41404A else R.color.color_B0B5B9))
 
             //water mark
-            tvWater.setTextColor(App.getColor(if (isDark) R.color.color_4D4E5D else R.color.color_999999))
+            tvWater.setTextColor(App.getColor(if (isDark) R.color.color_4D4E5D else R.color.color_80000000))
         }
     }
 
@@ -169,4 +169,6 @@ class TemplateMedia : TemplateModel<TemplateMediaBinding>() {
     override fun getAuthorView() = mBinding?.etAuthor!!
 
     override fun getWordCountView() = mBinding?.tvWordCount!!
+
+    override fun getTemplateContentView() = mBinding?.templateBg!!
 }

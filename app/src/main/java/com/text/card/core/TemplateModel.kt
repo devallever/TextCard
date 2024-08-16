@@ -1,5 +1,6 @@
 package com.text.card.core
 
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -58,6 +59,7 @@ abstract class TemplateModel<VB : ViewBinding> {
 //    abstract fun getQrCodeView(): ImageView
 //    abstract fun getQrCodeTitleView(): TextView
 //    abstract fun getQrCodeDescView(): TextView
+    abstract fun getTemplateContentView(): View
 
 
     fun initView() {

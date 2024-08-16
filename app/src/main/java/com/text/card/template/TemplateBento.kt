@@ -2,6 +2,7 @@ package com.text.card.template
 
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.text.card.App
@@ -183,5 +184,5 @@ class TemplateBento : TemplateModel<TemplateBentoBinding>() {
 
     override fun getWordCountView() = mBinding?.tvWordCount!!
 
-
+    override fun getTemplateContentView() = mBinding?.templateBg!!
 }
