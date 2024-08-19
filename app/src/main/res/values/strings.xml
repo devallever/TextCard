@@ -26,4 +26,7 @@
     <string name="share_app">Share App</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="version">Version</string>
+    <string name="default_author">Author</string>
+    <string name="default_title">About Design</string>
+    <string name="default_text">Create good design is not creating a form, but it is about creating a relationship. A form is not something that is created. There is always definite form for a good relationship. Design is about discovering that form and embodying it.</string>
 </resources>

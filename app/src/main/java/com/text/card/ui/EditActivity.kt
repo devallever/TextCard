@@ -493,6 +493,10 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                         TemplateManager.currentTemplate.getTitleView().setText("")
                         TemplateManager.currentTemplate.getContentView().setText("")
                         TemplateManager.currentTemplate.getAuthorView().setText("")
+                        TextCardCore.cardData.title = ""
+                        TextCardCore.cardData.text = ""
+                        TextCardCore.cardData.author = ""
+                        TextCardCore.saveCardData()
                         dialog.dismiss()
                     }
                     .setNegativeButton(R.string.cancle) { dialog, which ->
