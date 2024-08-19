@@ -56,7 +56,8 @@ abstract class TemplateModel<VB : ViewBinding> {
     abstract fun getContentView(): EditText
     abstract fun getAuthorView(): EditText
     abstract fun getWordCountView(): TextView
-//    abstract fun getQrCodeView(): ImageView
+
+    //    abstract fun getQrCodeView(): ImageView
 //    abstract fun getQrCodeTitleView(): TextView
 //    abstract fun getQrCodeDescView(): TextView
     abstract fun getTemplateContentView(): View

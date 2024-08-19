@@ -14,19 +14,17 @@
         android:tint="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/icon_setting" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/ivIcon"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:padding="4dp"
-        android:tint="@color/white"
+        android:padding="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/icon_setting" />
+        tools:src="@drawable/icon_template_media" />
 
     <TextView
         android:id="@+id/tvName"

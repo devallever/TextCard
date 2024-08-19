@@ -327,7 +327,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             val hasPermission =
                 PermissionHelper.hasPermissionOrigin(this@EditActivity, mPermissionsList)
             if (hasPermission) {
-                saveView { result, path->
+                saveView { result, path ->
                     if (result) {
                         toast("save success: $path")
                     } else {
@@ -442,7 +442,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 val hasPermission =
                     PermissionHelper.hasPermissionOrigin(this@EditActivity, mPermissionsList)
                 if (hasPermission) {
-                    saveView{ result, path->
+                    saveView { result, path ->
                         if (result) {
                             toast("save success: $path")
                         } else {
@@ -463,9 +463,13 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             mPopBinding.btnShare.setOnClickListener {
                 mPopExport.dismiss()
                 //
-                val path = "${cacheDir.absolutePath}${File.separator}${System.currentTimeMillis()}.jpg"
+                val path =
+                    "${cacheDir.absolutePath}${File.separator}${System.currentTimeMillis()}.jpg"
                 lifecycleScope.launch(Dispatchers.IO) {
-                    val result = saveViewAsImageToCache(TemplateManager.currentTemplate.getTemplateContentView(), path)
+                    val result = saveViewAsImageToCache(
+                        TemplateManager.currentTemplate.getTemplateContentView(),
+                        path
+                    )
                     if (result) {
                         ShareHelper.shareImage(this@EditActivity, path)
                     } else {
@@ -485,13 +489,13 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 AlertDialog.Builder(this@EditActivity)
                     .setMessage(R.string.clear_text_tips)
                     .setTitle(R.string.clear_all_text)
-                    .setPositiveButton(R.string.clear) {dialog, which ->
+                    .setPositiveButton(R.string.clear) { dialog, which ->
                         TemplateManager.currentTemplate.getTitleView().setText("")
                         TemplateManager.currentTemplate.getContentView().setText("")
                         TemplateManager.currentTemplate.getAuthorView().setText("")
                         dialog.dismiss()
                     }
-                    .setNegativeButton(R.string.cancle) {dialog, which ->
+                    .setNegativeButton(R.string.cancle) { dialog, which ->
                         dialog.dismiss()
                     }
                     .show()
@@ -670,7 +674,11 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             val fileName = "${System.currentTimeMillis()}.jpg"
             val path =
                 "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)}"
-            val result = saveViewAsImage(TemplateManager.currentTemplate.getTemplateContentView(), fileName, path)
+            val result = saveViewAsImage(
+                TemplateManager.currentTemplate.getTemplateContentView(),
+                fileName,
+                path
+            )
             cb.invoke(result, "${path}${File.separator}${fileName}")
         }
     }

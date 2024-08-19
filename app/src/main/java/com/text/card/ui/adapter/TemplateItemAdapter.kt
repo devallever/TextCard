@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.text.card.App
+import com.text.card.R
 import com.text.card.core.TemplateModel
 import com.text.card.databinding.RvTemplateBinding
 import com.text.card.helper.log
@@ -27,6 +29,7 @@ class TemplateItemAdapter(val data: MutableList<TemplateModel<*>> = mutableListO
         holder.binding.apply {
             val item = data[position]
             ivIcon.setImageResource(item.cover)
+            tvName.setTextColor(App.getColor(if (item.selected) R.color.theme_color else R.color.white))
             tvName.text = item.getTemplateName()
             log("${item.getTemplateName()} is selected = ${item.selected}")
             bgFrame.isVisible = item.selected

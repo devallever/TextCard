@@ -7,7 +7,7 @@ import com.text.card.base.AppActivity
 import com.text.card.databinding.ActivitySettingBinding
 import com.text.card.helper.toast
 
-class SettingActivity: AppActivity<ActivitySettingBinding, AbsViewModel>() {
+class SettingActivity : AppActivity<ActivitySettingBinding, AbsViewModel>() {
     override fun viewModelClass() = AbsViewModel::class.java
 
     override fun inflate() = ActivitySettingBinding.inflate(layoutInflater)

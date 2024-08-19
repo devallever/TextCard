@@ -12,6 +12,9 @@
     <color name="page_bg">#000000</color>
     <color name="card_drak_bg_color">@color/color_080510</color>
 
+    <color name="template_ticket_card_bg_color_dark">@color/color_80000000</color>
+    <color name="template_ticket_card_bg_color">@color/white</color>
+
     <color name="googleRed">#EB4334</color>
     <color name="googleGreen">#35AA53</color>
     <color name="googleBleu">#4586F3</color>

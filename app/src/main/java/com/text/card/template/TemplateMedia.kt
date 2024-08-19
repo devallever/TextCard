@@ -61,7 +61,7 @@ class TemplateMedia : TemplateModel<TemplateMediaBinding>() {
     }
 
     override fun getTemplateCover(): Int {
-        return R.drawable.icon_setting
+        return R.drawable.icon_template_media
     }
 
 

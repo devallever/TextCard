@@ -63,7 +63,7 @@ class TemplateSolid : TemplateModel<TemplateSolidBinding>() {
     }
 
     override fun getTemplateCover(): Int {
-        return R.drawable.icon_setting
+        return R.drawable.icon_template_solid
     }
 
 
