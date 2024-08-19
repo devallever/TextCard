@@ -31,6 +31,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:foreground="@drawable/ripple_default"
                 android:id="@+id/ivClose"
                 android:layout_width="42dp"
                 android:layout_height="42dp"

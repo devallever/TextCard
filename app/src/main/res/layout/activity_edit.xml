@@ -38,6 +38,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:foreground="@drawable/ripple_default"
                 android:id="@+id/ivSetting"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
@@ -50,6 +51,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btnExport"
+                android:foreground="@drawable/ripple_default"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:layout_marginEnd="20dp"
@@ -82,12 +84,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
+                android:foreground="@drawable/ripple_default"
                 android:id="@+id/ivClearText"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:layout_marginEnd="10dp"
                 android:padding="10dp"
-                android:src="@drawable/icon_erase"
+                android:src="@drawable/icon_clear_text"
                 android:tint="@color/white"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -95,6 +98,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:foreground="@drawable/ripple_default"
                 android:id="@+id/btnDone"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -135,6 +139,7 @@
             app:layout_constraintLeft_toLeftOf="parent">
 
             <LinearLayout
+                android:foreground="@drawable/ripple_default"
                 android:id="@+id/btnTemplate"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -146,10 +151,10 @@
 
                 <ImageView
                     android:id="@+id/ivTemplate"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_marginEnd="4dp"
-                    android:src="@drawable/icon_setting"
+                    android:src="@drawable/icon_tab_template"
                     android:tint="@color/white" />
 
                 <TextView
@@ -163,6 +168,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:foreground="@drawable/ripple_default"
                 android:id="@+id/btnBgColor"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -173,10 +179,10 @@
 
                 <ImageView
                     android:id="@+id/ivBgColor"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_marginEnd="4dp"
-                    android:src="@drawable/icon_setting"
+                    android:src="@drawable/icon_tab_bg_colog"
                     android:tint="@color/white"
                     android:visibility="gone" />
 
@@ -191,6 +197,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:foreground="@drawable/ripple_default"
                 android:id="@+id/btnSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -201,10 +208,10 @@
 
                 <ImageView
                     android:id="@+id/ivSwitch"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_marginEnd="4dp"
-                    android:src="@drawable/icon_setting"
+                    android:src="@drawable/icon_tab_switch"
                     android:tint="@color/white"
                     android:visibility="gone" />
 
@@ -311,6 +318,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.cardview.widget.CardView
+        android:foreground="@drawable/ripple_default"
         android:id="@+id/btnEditStyle"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
