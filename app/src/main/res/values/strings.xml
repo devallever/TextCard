@@ -29,4 +29,8 @@
     <string name="default_author">Author</string>
     <string name="default_title">About Design</string>
     <string name="default_text">Create good design is not creating a form, but it is about creating a relationship. A form is not something that is created. There is always definite form for a good relationship. Design is about discovering that form and embodying it.</string>
+    <string name="agree">Agree</string>
+    <string name="reject">Reject</string>
+    <string name="request_permission_message">We need store permission to save image.</string>
+    <string name="permission_tips_title">Tips</string>
 </resources>

@@ -1,10 +1,7 @@
 package com.text.card.ui
 
 import android.Manifest
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.os.Build
-import android.os.Environment
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
@@ -17,7 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.boat.vpn.demo.util.StatusBarUtil
-import com.text.card.App
 import com.text.card.R
 import com.text.card.base.AppActivity
 import com.text.card.core.ColorData
@@ -35,7 +31,6 @@ import com.text.card.helper.KeyboardUtils.SoftKeyboardListener.OnSoftKeyboardCha
 import com.text.card.helper.PermissionHelper
 import com.text.card.helper.ShareHelper
 import com.text.card.helper.ViewHelper
-import com.text.card.helper.copyToAlbum
 import com.text.card.helper.toast
 import com.text.card.ui.adapter.Pager2Adapter
 import com.text.card.ui.adapter.SwitchItemAdapter
@@ -46,9 +41,7 @@ import com.text.card.ui.dialog.WordCountFormatDialog
 import com.text.card.viewmodel.EditViewMode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
-import java.io.FileOutputStream
 
 
 class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
@@ -449,13 +442,24 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                         }
                     }
                 } else {
-                    val array: Array<String> =
-                        mPermissionsList.toArray(arrayOfNulls<String>(mPermissionsList.size))
-                    ActivityCompat.requestPermissions(
-                        this@EditActivity,
-                        array,
-                        RC_PERMISSION
-                    );
+                    AlertDialog.Builder(this@EditActivity)
+                        .apply {
+                            setMessage(R.string.request_permission_message)
+                            setTitle(R.string.permission_tips_title)
+                            setPositiveButton(getString(R.string.agree)) { dialog, which ->
+                                dialog.dismiss()
+                                val array: Array<String> =
+                                    mPermissionsList.toArray(arrayOfNulls<String>(mPermissionsList.size))
+                                ActivityCompat.requestPermissions(
+                                    this@EditActivity,
+                                    array,
+                                    RC_PERMISSION
+                                );
+                            }
+                            setNegativeButton(getString(R.string.reject)) { dialog, which ->
+                                dialog.dismiss()
+                            }
+                        }.show()
                 }
             }
             mPopBinding.btnShare.setOnClickListener {
