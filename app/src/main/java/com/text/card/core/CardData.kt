@@ -5,7 +5,7 @@ import com.text.card.helper.log
 
 class CardData {
     //card info
-    var iconResId: Int = R.drawable.icon_setting
+    var iconResId: Int = R.drawable.icon_abstract_01
     var dateFormatType = DateFormat.FORMAT_EE_M_D_Y_HH_MM
     var title = ""
     var text = ""
