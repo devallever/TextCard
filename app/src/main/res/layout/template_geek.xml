@@ -105,6 +105,8 @@
                     android:layout_marginBottom="30dp"
                     android:background="@null"
                     android:hint="@string/text_hint"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="5dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/color_60000000" />
 

@@ -169,8 +169,8 @@ class TemplateTicket : TemplateModel<TemplateTicketBinding>() {
             authorLine.setBackgroundColor(App.getColor(if (isDark) R.color.template_ticket_card_bg_color_dark else R.color.template_ticket_card_bg_color))
             qrCode.setBackgroundColor(App.getColor(if (isDark) R.color.template_ticket_card_bg_color_dark else R.color.template_ticket_card_bg_color))
             bottomBg.setBackgroundResource( if (isDark) R.drawable.shape_ticket_bottom_bg_dark else R.drawable.shape_ticket_bottom_bg)
-            iconBottomLine.setImageResource(if (isDark) R.drawable.icon_ticket_bg_line else R.drawable.icon_ticket_bg_line)
-            mainBottomLine.setImageResource(if (isDark) R.drawable.icon_ticket_bg_line else R.drawable.icon_ticket_bg_line)
+            iconBottomLine.setImageResource(if (isDark) R.drawable.icon_ticket_bg_line_dark else R.drawable.icon_ticket_bg_line)
+            mainBottomLine.setImageResource(if (isDark) R.drawable.icon_ticket_bg_line_dark else R.drawable.icon_ticket_bg_line)
 
             //icon
 //            ivIcon.setBackgroundResource(if (isDark) R.drawable.shape100f17_r45 else R.drawable.shape_999999_r45)

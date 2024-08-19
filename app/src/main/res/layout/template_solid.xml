@@ -53,7 +53,7 @@
                 android:textColorHint="@color/color_999999"
                 android:paddingVertical="3dp"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="24sp" />
 
 
             <EditText
@@ -67,6 +67,7 @@
                 android:textColorHint="@color/color_999999"
                 android:textSize="18sp"
                 android:text="Hello"
+                android:lineSpacingExtra="5dp"
                 android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
