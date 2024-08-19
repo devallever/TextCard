@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.boat.vpn.demo.util.StatusBarUtil
+import com.text.card.App
 import com.text.card.R
 import com.text.card.base.AppActivity
 import com.text.card.core.ColorData
@@ -236,14 +237,12 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             changeTemplate(TemplateManager.currentTemplate)
 
             scrollView.post {
-                scrollView.post {
-                    ViewHelper.setMarginTop(
-                        contentContainer,
-                        StatusBarUtil.getStatusBarHeight(this@EditActivity) + DisplayHelper.dip2px(
-                            54 + 10
-                        )
+                ViewHelper.setMarginTop(
+                    contentContainer,
+                    StatusBarUtil.getStatusBarHeight(this@EditActivity) + DisplayHelper.dip2px(
+                        54 + 10
                     )
-                }
+                )
             }
 
             KeyboardUtils.SoftKeyboardListener.setListener(
@@ -253,7 +252,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                         btnDone.isVisible = false
                         btnExport.isVisible = true
                         ivClearText.isVisible = true
-                        saveEdittextContent()
+                        mViewModel.saveEdittextContent()
                     }
 
                     override fun show(height: Int) {
@@ -327,7 +326,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
             val hasPermission =
                 PermissionHelper.hasPermissionOrigin(this@EditActivity, mPermissionsList)
             if (hasPermission) {
-                saveView { result, path ->
+                mViewModel.saveView { result, path ->
                     if (result) {
                         toast("save success: $path")
                     } else {
@@ -442,7 +441,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 val hasPermission =
                     PermissionHelper.hasPermissionOrigin(this@EditActivity, mPermissionsList)
                 if (hasPermission) {
-                    saveView { result, path ->
+                    mViewModel.saveView { result, path ->
                         if (result) {
                             toast("save success: $path")
                         } else {
@@ -450,9 +449,8 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                         }
                     }
                 } else {
-                    // 请求权限
                     val array: Array<String> =
-                        mPermissionsList.toArray(arrayOfNulls<String>(mPermissionsList.size)) // 使用ArrayList的size作为参数也可以，例如：new Integer[list.size()]
+                        mPermissionsList.toArray(arrayOfNulls<String>(mPermissionsList.size))
                     ActivityCompat.requestPermissions(
                         this@EditActivity,
                         array,
@@ -466,7 +464,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                 val path =
                     "${cacheDir.absolutePath}${File.separator}${System.currentTimeMillis()}.jpg"
                 lifecycleScope.launch(Dispatchers.IO) {
-                    val result = saveViewAsImageToCache(
+                    val result = mViewModel.saveViewAsImageToCache(
                         TemplateManager.currentTemplate.getTemplateContentView(),
                         path
                     )
@@ -600,19 +598,6 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
         }
     }
 
-    private fun saveEdittextContent() {
-        TemplateManager.currentTemplate.apply {
-            TextCardCore.cardData.title = getTitleView().text.toString()
-            TextCardCore.cardData.text = getContentView().text.toString()
-            TextCardCore.cardData.author = getAuthorView().text.toString()
-            TextCardCore.saveCardData()
-        }
-    }
-
-    private fun changeBgColorSelectedData(templateModel: TemplateModel<*>) {
-
-    }
-
     private fun changeBgColorData(templateModel: TemplateModel<*>, isChangeData: Boolean = true) {
         val lightList = templateModel.getTemplateBgColor()[0].colorDataList
         val darkList = templateModel.getTemplateBgColor()[1].colorDataList
@@ -673,64 +658,5 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
         }
     }
 
-    private fun saveView(cb: (success: Boolean, path: String) -> Unit) {
-        lifecycleScope.launch(Dispatchers.Main) {
-            val fileName = "${System.currentTimeMillis()}.jpg"
-            val path =
-                "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)}"
-            val result = saveViewAsImage(
-                TemplateManager.currentTemplate.getTemplateContentView(),
-                fileName,
-                path
-            )
-            cb.invoke(result, "${path}${File.separator}${fileName}")
-        }
-    }
 
-    private suspend fun saveViewAsImage(view: View, fileName: String, path: String) =
-        withContext(Dispatchers.IO) {
-
-            // 创建一个和View相同大小的空的Bitmap
-            val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-            // 使用上述创建的Bitmap，创建一个Canvas
-            val canvas = Canvas(bitmap)
-            // 将View绘制在Canvas上
-            view.draw(canvas)
-            // 将Bitmap写入到SD卡中
-            val file = File(this@EditActivity.cacheDir.absolutePath, fileName)
-            try {
-                val out = FileOutputStream(file)
-                bitmap.compress(Bitmap.CompressFormat.PNG, 90, out)
-                out.flush()
-                out.close()
-                file.copyToAlbum(this@EditActivity, fileName, getString(R.string.app_name))
-                file.delete()
-                return@withContext true
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-            return@withContext false
-        }
-
-    suspend fun saveViewAsImageToCache(view: View, filename: String?): Boolean {
-        // 创建一个和View相同大小的空的Bitmap
-        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-        // 使用上述创建的Bitmap，创建一个Canvas
-        val canvas = Canvas(bitmap)
-        // 将View绘制在Canvas上
-        view.draw(canvas)
-        // 将Bitmap写入到SD卡中
-        val file = File(filename)
-        try {
-            val out = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.PNG, 90, out)
-            out.flush()
-            out.close()
-            return true
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return false
-    }
 }
