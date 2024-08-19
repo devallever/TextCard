@@ -19,3 +19,22 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+#压缩等级0~7
+-optimizationpasses 5
+#重构类包结构
+-repackageclasses
+#gson start
+-keepclassmembers,allowobfuscation class * {
+    <init>(...);
+    @com.google.gson.annotations.SerializedName <fields>;
+}
+
+-keepattributes Signature
+-keep class com.google.gson.reflect.TypeToken { *; }
+-keep class * extends com.google.gson.reflect.TypeToken
+#gson end
+
+-keep class * extends androidx.lifecycle.ViewModel {
+    <init>();
+}
