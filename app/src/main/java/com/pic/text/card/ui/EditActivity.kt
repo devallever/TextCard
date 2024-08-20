@@ -48,8 +48,8 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
 
     private val RC_PERMISSION = 1000
     private val mPermissionsList = ArrayList<String>().apply {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            add(Manifest.permission.READ_MEDIA_IMAGES)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//            add(Manifest.permission.READ_MEDIA_IMAGES)
         } else {
             add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
@@ -246,6 +246,9 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
                         btnExport.isVisible = true
                         ivClearText.isVisible = true
                         mViewModel.saveEdittextContent()
+                        TemplateManager.currentTemplate.getTitleView().clearFocus()
+                        TemplateManager.currentTemplate.getContentView().clearFocus()
+                        TemplateManager.currentTemplate.getAuthorView().clearFocus()
                     }
 
                     override fun show(height: Int) {
@@ -309,6 +312,12 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
         TemplateManager.destroyTemplate()
     }
 
+    private fun checkPermission() =  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        true
+    } else {
+        PermissionHelper.hasPermissionOrigin(this@EditActivity, mPermissionsList)
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -316,8 +325,7 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == RC_PERMISSION) {
-            val hasPermission =
-                PermissionHelper.hasPermissionOrigin(this@EditActivity, mPermissionsList)
+            val hasPermission = checkPermission()
             if (hasPermission) {
                 mViewModel.saveView { result, path ->
                     if (result) {
@@ -431,8 +439,8 @@ class EditActivity : AppActivity<ActivityEditBinding, EditViewMode>() {
 
             mPopBinding.btnSave.setOnClickListener {
                 mPopExport.dismiss()
-                val hasPermission =
-                    PermissionHelper.hasPermissionOrigin(this@EditActivity, mPermissionsList)
+                val hasPermission = checkPermission()
+
                 if (hasPermission) {
                     mViewModel.saveView { result, path ->
                         if (result) {
