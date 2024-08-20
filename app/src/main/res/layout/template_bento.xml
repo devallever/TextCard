@@ -67,6 +67,7 @@
                 android:hint="@string/title_hint"
                 android:maxLines="1"
                 android:paddingHorizontal="20dp"
+                android:singleLine="true"
                 android:textColor="@color/color_A0000000"
                 android:textColorHint="@color/color_40000000"
                 android:textSize="25sp"
@@ -80,8 +81,8 @@
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/shape_bento_item_bg"
                 android:hint="@string/text_hint"
-                android:minHeight="64dp"
                 android:lineSpacingExtra="5sp"
+                android:minHeight="64dp"
                 android:padding="20dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/color_40000000"
@@ -176,12 +177,12 @@
                 android:background="@drawable/shape_bento_item_bg">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:visibility="visible"
                     android:id="@+id/waterMark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -200,8 +201,8 @@
                         style="@style/defaultTextStyle"
                         android:layout_marginHorizontal="4dp"
                         android:text="@string/app_name"
-                        android:textStyle="bold"
                         android:textColor="@color/color_80000000"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/ivWatermark"
                         app:layout_constraintLeft_toRightOf="@+id/ivWatermark"
                         app:layout_constraintTop_toTopOf="@+id/ivWatermark" />

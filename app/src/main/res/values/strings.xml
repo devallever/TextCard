@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TextCard</string>
+    <string name="app_name">Text Card</string>
     <string name="export">Export</string>
     <string name="done">Done</string>
     <string name="tab_template">Template</string>
@@ -27,10 +27,10 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="version">Version</string>
     <string name="default_author">Author</string>
-    <string name="default_title">About Design</string>
-    <string name="default_text">Create good design is not creating a form, but it is about creating a relationship. A form is not something that is created. There is always definite form for a good relationship. Design is about discovering that form and embodying it.</string>
+    <string name="default_title">Make Text To Beautiful Cards !\n</string>
     <string name="agree">Agree</string>
     <string name="reject">Reject</string>
     <string name="request_permission_message">We need store permission to save image.</string>
     <string name="permission_tips_title">Tips</string>
+    <string name="default_text">Life was like a box of chocolates, you never know what you\'re gonna get.\nYou got a dream, you gotta protect it. People can\'t do something themselves, they wanna tell you you can\'t do it. If you want something, go get it.\nEasy doesn\'t enter into grown-up life.</string>
 </resources>
