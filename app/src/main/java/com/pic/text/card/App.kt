@@ -32,6 +32,7 @@ class App : Application() {
             TextCardCore.cardData.title = getString(R.string.default_title)
             TextCardCore.cardData.text = getString(R.string.default_text)
             TextCardCore.cardData.author = getString(R.string.default_author)
+            TextCardCore.saveCardData()
             StoreManager.putBoolean("first open", false)
         }
     }
