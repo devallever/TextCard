@@ -28,7 +28,7 @@ class SettingActivity : AppActivity<ActivitySettingBinding, AbsViewModel>() {
             }
 
             tvPrivacy.setOnClickListener {
-                com.pic.text.card.ui.BrowserActivity.start(this@SettingActivity, "Privacy", "https://www.google.com/")
+                com.pic.text.card.ui.BrowserActivity.start(this@SettingActivity, "Privacy", "https://text-card.inbushtech.uk/privacy.html")
             }
 
             tvVersion.text = BuildConfig.VERSION_NAME
