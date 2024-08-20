@@ -24,6 +24,7 @@
 
             <!-- ICON -->
             <ImageView
+                android:foreground="@drawable/ripple_default"
                 android:id="@+id/ivIcon"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
@@ -34,6 +35,7 @@
 
             <!-- Date -->
             <TextView
+                android:foreground="@drawable/ripple_default"
                 android:id="@+id/tvDate"
                 style="@style/smallTextStyle"
                 android:layout_marginBottom="20dp"
@@ -90,6 +92,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:foreground="@drawable/ripple_default"
                     android:id="@+id/tvWordCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -172,7 +175,7 @@
             android:id="@+id/ivWatermark"
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/ic_launcher_round"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
