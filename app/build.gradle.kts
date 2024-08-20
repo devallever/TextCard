@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.text.card"
+    namespace = "com.pic.text.card"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.text.card"
+        applicationId = "com.pic.text.card"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

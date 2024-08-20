@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".App"
+        android:name="com.pic.text.card.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -34,17 +34,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.text.card.ui.EditActivity"
+            android:name="com.pic.text.card.ui.EditActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity android:name="com.text.card.ui.SettingActivity"
+        <activity android:name="com.pic.text.card.ui.SettingActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.text.card.ui.BrowserActivity"
+        <activity android:name="com.pic.text.card.ui.BrowserActivity"
             android:screenOrientation="portrait"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.text.card.fileprovider"
+            android:authorities="com.pic.text.card.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
 

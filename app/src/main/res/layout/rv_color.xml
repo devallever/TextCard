@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-    <com.text.card.ui.widget.GradientCircleView
+    <com.pic.text.card.ui.widget.GradientCircleView
         android:id="@+id/gradientCircleView"
         android:layout_width="28dp"
         android:layout_height="28dp"
