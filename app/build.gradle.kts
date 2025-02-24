@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.pic.text.card"
+    namespace = "com.allever.android.card.text.pic.text"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.pic.text.card"
+        applicationId = "com.allever.android.card.text.pic.text"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -21,12 +21,7 @@ android {
     }
 
     signingConfigs {
-        create("release") {
-            storeFile = file("../textcard.jks")
-            storePassword = "textcard123456"
-            keyAlias = "textcard"
-            keyPassword = "textcard123456"
-        }
+
     }
 
     buildTypes {
@@ -36,7 +31,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("release")
+            //signingConfig = signingConfigs.getByName("release")
         }
 
         debug {
@@ -74,7 +69,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
     implementation("androidx.datastore:datastore-preferences:1.1.1")
     implementation("com.google.code.gson:gson:2.10.1")
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+//    testImplementation(libs.junit)
+//    androidTestImplementation(libs.androidx.junit)
+//    androidTestImplementation(libs.androidx.espresso.core)
 }
